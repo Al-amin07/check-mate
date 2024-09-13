@@ -16,3 +16,13 @@
     background-color: #5a8c67;
     /* background-color: #477553; */
 }
+.bbb{
+    padding: 5px 0;
+}
+
+.custom-table td {
+    padding-top: 20px;
+    padding-bottom: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }

@@ -4,6 +4,7 @@ import { MdOutlineTask } from "react-icons/md";
 import { HiUsers } from "react-icons/hi2";
 import { MdFeedback } from "react-icons/md";
 import useAuth from "../../../hooks/useAuth";
+import { LuTag } from "react-icons/lu";
 
 
 const AdminSidebar = () => {
@@ -18,7 +19,7 @@ const AdminSidebar = () => {
                 <NavLink
                 to='/'
                 className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mb-3 border rounded-md border-green-500  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] hover:border-0 ${
+                    `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
                       isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
                     }`
                   }
@@ -30,10 +31,10 @@ const AdminSidebar = () => {
                 <NavLink
                 to='/tasks'
                 className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mb-3 border rounded-md border-green-500  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] hover:border-0 ${
-                      isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
-                    }`
-                  }
+                  `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
+                    isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
+                  }`
+                }
               >
                 <MdOutlineTask className='w-6 h-6' />
 
@@ -42,10 +43,10 @@ const AdminSidebar = () => {
                 <NavLink
                 to='/users'
                 className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mb-3 border rounded-md border-green-500  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] hover:border-0 ${
-                      isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
-                    }`
-                  }
+                  `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
+                    isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
+                  }`
+                }
               >
                 <HiUsers className='w-6 h-6' />
 
@@ -54,26 +55,26 @@ const AdminSidebar = () => {
                 <NavLink
                 to='/feedbacks'
                 className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mb-3 border rounded-md border-green-500  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] hover:border-0 ${
-                      isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
-                    }`
-                  }
+                  `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
+                    isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
+                  }`
+                }
               >
                 <MdFeedback className='w-6 h-6' />
 
                 <span className='mx-4 font-medium'>Feedbackes</span>
               </NavLink>
                 <NavLink
-                to='/users'
+                to='/subscriptions'
                 className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mb-3 border rounded-md border-green-500  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] hover:border-0 ${
-                      isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
-                    }`
-                  }
+                  `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
+                    isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'
+                  }`
+                }
               >
-                <HiUsers className='w-6 h-6' />
+                <LuTag className='w-6 h-6' />
 
-                <span className='mx-4 font-medium'>Users</span>
+                <span className='mx-4 font-medium'>Subscriptions</span>
               </NavLink>
               
         </>

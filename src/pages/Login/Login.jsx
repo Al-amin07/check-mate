@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import { ImSpinner9 } from "react-icons/im";
 
 const Login = () => {
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, saveUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   
@@ -16,6 +16,7 @@ const Login = () => {
     try {
       const result = await signInWithGoogle()
       console.log(result)
+      saveUser(result.user)
       navigate('/')
 
     } catch (error) {

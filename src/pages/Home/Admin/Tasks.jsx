@@ -1,4 +1,7 @@
 import TasksRow from "./Tables/TasksRow";
+import TaskTable from "./Tables/TaskTabel";
+import { LuPlus } from "react-icons/lu";
+import { IoSearchSharp } from "react-icons/io5";
 
 
 const Tasks = () => {
@@ -15,27 +18,25 @@ const Tasks = () => {
   return (
     <div className="p-4 lg:p-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-green-900">All Tasks</h2>
-        <button className="bg-green-700 text-white py-2 px-4 rounded-lg hover:bg-green-800">+ Create New Task</button>
+      <div className="flex justify-end items-center mb-4">
+        
+        <button className="bg-[#4D7A58] flex items-center text-lg  text-white py-2 px-4 rounded-full hover:bg-green-800"><LuPlus size={28} /> Create New Task</button>
+      </div>
+      <div className="flex items-center gap-4 mb-3">
+      <h2 className="text-lg font-bold text-green-900">All Tasks</h2>
+      <hr className="flex-1 border"/>
       </div>
 
       {/* Search and Date Picker */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="relative w-full">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"
-          />
-          <span className="absolute top-2 right-3 text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 18l6-6m0 0l-6-6m6 6H3" />
-            </svg>
-          </span>
+      <div className="flex items-center justify-end gap-4 mb-4">
+        <div>
+          <button className="flex bgc text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
+            <IoSearchSharp  size={26}/>
+            Search
+          </button>
         </div>
         <div>
-          <select className="py-2 px-4 border border-gray-300 rounded-lg">
+          <select className="py-2 px-4 border col font-medium border-gray-300 rounded-lg">
             <option>August 2024</option>
             <option>September 2024</option>
             <option>October 2024</option>
@@ -44,35 +45,7 @@ const Tasks = () => {
       </div>
 
       {/* Task Table */}
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <table className="min-w-full table-auto">
-          <thead className="bg-green-700 text-white">
-            <tr>
-              <th className="px-4 py-2">Sl</th>
-              <th className="px-4 py-2">Task Name</th>
-              <th className="px-4 py-2">Duration</th>
-              <th className="px-4 py-2">Location</th>
-              <th className="px-4 py-2">Employee Name</th>
-              <th className="px-4 py-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task, index) => (
-             <TasksRow key={task.id} index={index} task={task}/>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Pagination */}
-        <div className="flex justify-between items-center px-4 py-2 bg-green-100">
-          <span className="text-sm">Rows Per Page: 7</span>
-          <span className="text-sm">1-7 of 24</span>
-          <div className="flex space-x-2">
-            <button className="p-1 rounded-full bg-green-700 text-white">‹</button>
-            <button className="p-1 rounded-full bg-green-700 text-white">›</button>
-          </div>
-        </div>
-      </div>
+      <TaskTable />
     </div>
   );
 };

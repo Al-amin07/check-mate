@@ -8,6 +8,8 @@ import PrivateRoute from './PrivateRoute'
 import Tasks from '../pages/Home/Admin/Tasks'
 import User from '../pages/Home/Admin/users/User'
 import Feedback from '../pages/Home/Admin/feedbacks/Feedback'
+import Subscriptions from '../pages/Home/Admin/Subs/Subscriptions'
+import VerifyRoute from './VerifyRoute'
 
 
 
@@ -31,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: '/feedbacks',
         element: <Feedback />
+      },
+      {
+        path: '/subscriptions',
+        element: <Subscriptions />
       }
      
     ],
@@ -38,4 +44,5 @@ export const router = createBrowserRouter([
   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <SignUp /> },
+  { path: '/verify/:email', element: <VerifyRoute />}
 ])

@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import GetPhoto from "../../utils/GetPhoto";
-import axios from "axios";
+
 const SignUp = () => {
   const {
     createUser,
@@ -24,6 +24,7 @@ const SignUp = () => {
     try {
       const result = await signInWithGoogle();
       console.log(result);
+      saveUser(result.user)
       navigate("/");
     } catch (error) {
       toast.error(error.message);
@@ -54,28 +55,19 @@ const SignUp = () => {
     }
     try {
       const image = await GetPhoto(photo);
-      // const userDetails = {
-      //   email,
-      //   password,
-      //   fullName,
-      //   image,
-      //   tasks: [],
-      //   role: "employee",
-      //   companyName: cname,
-      //   companySize: csize,
-      // };
-      // const { data } = await axios.post(
-      //   `${import.meta.env.VITE_API_URL}/user`,
-      //   userDetails
-      // );
-      // console.log(data);
-      const result = await createUser(email, password)
-      console.log(result)
+      const result = await createUser(email, password);
+      console.log(result);
       await updateUserProfile(fullName, image);
-      setUser({...user, photoURL: image})
-      toast.success('Registration Successfull')
-      saveUser({...user, cname, csize})
-      navigate('/'); 
+      setUser({ ...user, photoURL: image });
+      toast.success("Registration Successfull");
+      saveUser({
+        email: result?.user?.email,
+        displayName: result?.user?.displayName,
+        photoURL: result?.user?.photoURL,
+        companyName: cname,
+        companySize: csize,
+      });
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     } finally {

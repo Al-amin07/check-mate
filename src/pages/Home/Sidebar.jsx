@@ -67,7 +67,7 @@ const Sidebar = () => {
           </div>
 
           {/* Nav Items */}
-          <div className='flex  flex-col bg-[#f9f9f9] justify-between px-2 flex-1 mt-[42px] lg:mt-6'>
+          <div className='flex  flex-col bg-[#f9f9f9] justify-between  flex-1 mt-[42px] lg:mt-6'>
             {/* Conditional toggle button here.. */}
           
             {/*  Menu Items */}
@@ -87,7 +87,7 @@ const Sidebar = () => {
          
           <button
             onClick={logOut}
-            className='flex w-full items-center gap-0 rounded-md mx-2 px-4 py-2  text-red-600 bg-white border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-500 transform'
+            className='flex w-full items-center gap-0 rounded-md mx-2 px-2 py-2  text-red-600 bg-white border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-500 transform'
           >
             <GrLogout className='w-6 h-6' />
 
