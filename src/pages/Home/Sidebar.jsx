@@ -1,22 +1,24 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { BsFillHouseAddFill } from 'react-icons/bs'
+
 
 import { AiOutlineBars } from 'react-icons/ai'
 
-import { NavLink } from 'react-router-dom'
+
 
 import { Link } from 'react-router-dom'
-import { FaHome } from "react-icons/fa";
+
 import useAuth from '../../hooks/useAuth'
 import { RxCross1 } from "react-icons/rx";
 import AdminSidebar from './Admin/AdminSidebar'
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import EmployeeSidebar from './Employee/EmployeeSidebar'
+
 
 const Sidebar = () => {
-  const { logOut } = useAuth()
-  const [isActive, setActive] = useState(false)
+  const { logOut, role } = useAuth()
+  const [isActive, setActive] = useState(true)
+  
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -25,7 +27,7 @@ const Sidebar = () => {
   return (
     <>
       {/* Small Screen Navbar */}
-      <div className='bg-[#f9f9f9]  text-gray-800 flex justify-between md:hidden'>
+      <div className='bg-[#f9f9f9]  text-gray-800 flex justify-between '>
         {/* <div>
           <div className=' hidden lg:block cursor-pointer p-4 font-bold'>
           <Link
@@ -40,16 +42,17 @@ const Sidebar = () => {
 
         <button
           onClick={handleToggle}
-          className=' z-50 absolute inline-block lg:hidden top-3 left-4 p-4 focus:outline-none hover:bg-gray-300 hover:scale-105 transition-all duration-500 focus:bg-[#f9f9f9]'
+          className=' z-50 absolute inline-block  lg:hidden top-3 left-4 p-4 focus:outline-none hover:bg-gray-300 hover:scale-105 transition-all duration-500 focus:bg-[#f9f9f9]'
         >
             {!isActive ? <RxCross1 className='h-6 w-6'/> : <AiOutlineBars className='h-6 w-6' />}
           
         </button>
+       
       </div>
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed   flex flex-col justify-between overflow-x-hidden bg-[#f9f9f9] w-64 space-y-2 px-2 py-4 absolute inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed shadow-2xl lg:shadow-none   flex flex-col justify-between overflow-x-hidden bg-[#f9f9f9] w-[230px] space-y-2  pl-2 pr-2 lg:pr-0 lg:pl-4 py-4 absolute inset-y-0 left-0 transform ${
           isActive && '-translate-x-full'
         }  lg:translate-x-0  transition duration-200 ease-in-out`}
       >
@@ -73,8 +76,8 @@ const Sidebar = () => {
             {/*  Menu Items */}
             <nav>
               {/* Statistics */}
-              <AdminSidebar />
-            
+              {role === 'admin' && <AdminSidebar />}
+              { role === 'employee' && <EmployeeSidebar />}
 
             
             </nav>
@@ -87,7 +90,7 @@ const Sidebar = () => {
          
           <button
             onClick={logOut}
-            className='flex w-full items-center gap-0 rounded-md mx-2 px-2 py-2  text-red-600 bg-white border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-500 transform'
+            className='flex w-full items-center gap-0 rounded-md  px-2 py-2  text-red-600 bg-white border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-500 transform'
           >
             <GrLogout className='w-6 h-6' />
 

@@ -1,29 +1,40 @@
-import TasksRow from "./Tables/TasksRow";
+
 import TaskTable from "./Tables/TaskTabel";
 import { LuPlus } from "react-icons/lu";
 import { IoSearchSharp } from "react-icons/io5";
+import { useState } from "react";
+import TaskModal from "../Modals/TaskModal";
 
 
 const Tasks = () => {
-  const tasks = [
-    { id: 1, name: 'Project design', date: 'Sept 22', time: '4:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'John D', status: 'Completed', statusColor: 'green' },
-    { id: 2, name: 'Washing car', date: 'Sept 18', time: '2:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Khalid', status: 'Rejected', statusColor: 'red' },
-    { id: 3, name: 'Deliver product', date: 'Sept 23', time: '4:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Afrahim', status: 'In progress', statusColor: 'yellow' },
-    { id: 4, name: 'Take a ride', date: 'Sept 12', time: '1:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Jack', status: 'Completed', statusColor: 'green' },
-    { id: 5, name: 'Deliver Food', date: 'Sept 15', time: '4:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Samin', status: 'Rejected', statusColor: 'red' },
-    { id: 6, name: 'Cleaning house', date: 'Sept 16', time: '4:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Reehan', status: 'Completed', statusColor: 'green' },
-    { id: 7, name: 'Cleaning pool', date: 'Sept 20', time: '4:00 PM', location: 'https://www.google.com/maps/place/Toronto', employee: 'Azizul', status: 'In progress', statusColor: 'yellow' }
-  ];
+ 
+
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false)
+  }
+
+  const handleData = async (e) => {
+    e.preventDefault();
+    const taskName = e.target.task.value;
+    const date = e.target.date.value;
+    const time = e.target.time.value;
+    const location = e.target.task.value;
+    const employeeName = e.target.ename.value;
+    console.log(taskName, date, time, location, employeeName);
+    setIsOpen(false)
+  } 
 
   return (
     <div className="p-4 lg:p-8">
       {/* Header */}
       <div className="flex justify-end items-center mb-4">
         
-        <button className="bg-[#4D7A58] flex items-center text-lg  text-white py-2 px-4 rounded-full hover:bg-green-800"><LuPlus size={28} /> Create New Task</button>
+        <button onClick={() => setIsOpen(true)} className="bg-[#4D7A58] flex items-center text-lg  text-white py-2 px-4 rounded-full hover:bg-green-800"><LuPlus size={28} /> Create New Task</button>
+        <TaskModal handleData={handleData} isOpen={isOpen} closeModal={closeModal}/>
       </div>
-      <div className="flex items-center gap-4 mb-3">
-      <h2 className="text-lg font-bold text-green-900">All Tasks</h2>
+      <div className="flex items-center gap-6 mb-3">
+      <h2 className="text-xl font-bold text-green-900">All Tasks</h2>
       <hr className="flex-1 border"/>
       </div>
 

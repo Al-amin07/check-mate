@@ -20,7 +20,8 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [role, setRole] = useState('employee');
+  const [userDetails, setUserDetails] = useState({})
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -42,12 +43,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = async () => {
-    setLoading(true);
+    // setLoading(true);
     await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
       withCredentials: true,
     });
+    localStorage.setItem('token', '')
     return signOut(auth);
   };
+  console.log(userDetails)
 
   const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
@@ -55,6 +58,28 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     });
   };
+
+ useEffect(() => {
+  console.log('Hello Word!!!')
+  if(user?.email){
+    getRole(user?.email)
+  }
+ },[user])
+
+  const getRole = async (email) => {
+     try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/role/${email}`)
+      
+      setUserDetails(data);
+      if(data?.role){
+        setRole(data.role)
+      }
+     } catch (error) {
+      console.log(error?.message)
+     }
+  }
+
+ 
 
   const saveUser = async (currentUser) => {
     console.log(currentUser);
@@ -68,6 +93,7 @@ const AuthProvider = ({ children }) => {
       companySize: currentUser?.companySize || '',
       time: new Date(),
     };
+    // userDetails(userData)
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/user`,
       userData
@@ -89,13 +115,15 @@ const AuthProvider = ({ children }) => {
 
   // onAuthStateChange
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth,async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        console.log(currentUser);
-
+      if (currentUser && currentUser?.email) {
+        
+        getRole(currentUser?.email)
         getToken(currentUser.email);
       }
+      
+
       setLoading(false);
     });
     return () => {
@@ -113,8 +141,11 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     resetPassword,
     logOut,
+    userDetails,
     updateUserProfile,
     saveUser,
+    role,
+    getRole
   };
 
   return (

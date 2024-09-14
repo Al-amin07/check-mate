@@ -1,3 +1,4 @@
+import Title from "../../Common/Title";
 import UserTable from "./UserTable";
 
 
@@ -12,13 +13,12 @@ const User = () => {
 
   return (
     <div className="p-4 lg:p-8">
-      <div className="flex items-center gap-4 mb-4">
-      <h2 className="text-xl font-bold text-green-700 ">List of Users</h2>
-      <hr  className="flex-1 border"/>
-      </div>
+     <Title title={'List of Users'}/>
+      <div className="space-y-12">
       <UserTable title={'Getting Started'}/>
       <UserTable title={'Scaling Up'}/>
       <UserTable title={'Home Program'}/>
+      </div>
      
     </div>
   );

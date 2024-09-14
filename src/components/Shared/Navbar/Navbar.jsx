@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className=" hover:scale-105 transition-all duration-300">
           <Link
             to={"/"}
-            className="font-medium hidden lg:block xl:hidden   text-xl text-white bg-green-800 px-3 py-1 z-20 rounded-full"
+            className="font-medium border-2 hidden  xl:hidden   text-xl text-white bg-green-800 px-3 py-1 z-20 rounded-full"
           >
             CheckMateGo
           </Link>

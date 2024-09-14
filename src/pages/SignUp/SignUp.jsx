@@ -16,6 +16,7 @@ const SignUp = () => {
     signInWithGoogle,
     updateUserProfile,
     saveUser,
+    getRole
   } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -60,13 +61,14 @@ const SignUp = () => {
       await updateUserProfile(fullName, image);
       setUser({ ...user, photoURL: image });
       toast.success("Registration Successfull");
-      saveUser({
+      await saveUser({
         email: result?.user?.email,
         displayName: result?.user?.displayName,
         photoURL: result?.user?.photoURL,
         companyName: cname,
         companySize: csize,
       });
+      getRole(email)
       navigate("/");
     } catch (error) {
       toast.error(error.message);
