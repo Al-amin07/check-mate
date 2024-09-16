@@ -7,8 +7,10 @@ import {
 } from "@headlessui/react";
 import { Fragment } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
+import { ImSpinner9 } from "react-icons/im";
+// import { ImSpinner9 } from "react-icons/im";
 
-const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index }) => {
+const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index, setDetails, details, loading }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -80,7 +82,11 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index }) => 
                     <label className=" font-medium whitespace-nowrap">
                      Package Details: 
                     </label>
-                    <textarea required name="details" className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md " rows={8} cols={10} ></textarea>
+                    <textarea required
+                    // defaultValue={item?.details.split('\n')}
+                    value={details.join('\n')}
+                    onChange={(e) => setDetails(e.target.value.split("\n"))}
+                    name="details" className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md " rows={8} cols={10} ></textarea>
                   </div>
                   
 
@@ -89,10 +95,11 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index }) => 
                   {/* Confirm Button */}
                   <div className="flex justify-end ">
                     <button
+                    disabled={loading}
                       type="submit"
-                      className="bgc mt-5 text-white px-6 py-2 rounded-full hover:bg-green-700 focus:outline-none"
+                      className="bgc mt-5 text-white px-6 py-2 rounded-full hover:bg-green-700 disabled:bg-green-500 focus:outline-none"
                     >
-                      Save
+                      {loading ? <ImSpinner9 size={24} className="animate-spin m-auto"/> : 'Save'}
                     </button>
                   </div>
                 </form>
@@ -115,6 +122,11 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index }) => 
 CreatePackageModal.propTypes = {
   closeModal: PropTypes.func,
   handleData: PropTypes.func,
+  item: PropTypes.object,
+  index: PropTypes.number,
+  setDetails: PropTypes.func,
+  loading: PropTypes.bool,
+  details: PropTypes.array,
  
   isOpen: PropTypes.bool,
 };

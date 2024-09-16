@@ -13,15 +13,20 @@ import {
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 import axios from "axios";
+
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  
   const [user, setUser] = useState(null);
+  const [Datas, setDatas] = useState({});
+  const [dataLoading, setDataLoading] = useState(false)
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState('employee');
-  const [userDetails, setUserDetails] = useState({})
+  const [role, setRole] = useState("");
+  const [roleLoading, setRoleLoading] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -47,10 +52,10 @@ const AuthProvider = ({ children }) => {
     await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
       withCredentials: true,
     });
-    localStorage.setItem('token', '')
+    localStorage.setItem("token", "");
     return signOut(auth);
   };
-  console.log(userDetails)
+  // console.log(userDetails);
 
   const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
@@ -59,41 +64,39 @@ const AuthProvider = ({ children }) => {
     });
   };
 
- useEffect(() => {
-  console.log('Hello Word!!!')
-  if(user?.email){
-    getRole(user?.email)
-  }
- },[user])
-
   const getRole = async (email) => {
-     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/role/${email}`)
-      
-      setUserDetails(data);
-      if(data?.role){
-        setRole(data.role)
-      }
-     } catch (error) {
-      console.log(error?.message)
-     }
-  }
+    setRoleLoading(true);
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/role/${email}`
+      );
 
- 
+      setUserDetails(data);
+
+      if (data?.role) {
+        setRole(data?.role);
+      }
+      return data?.role;
+    } catch (error) {
+      console.log(error?.message);
+    } finally {
+      setRoleLoading(false);
+    }
+  };
 
   const saveUser = async (currentUser) => {
-    console.log(currentUser);
+    // console.log(currentUser);
     const userData = {
       email: currentUser?.email,
       name: currentUser?.displayName,
       image: currentUser?.photoURL,
       role: "employee",
       isVerified: false,
-      companyName: currentUser?.companyName || '',
-      companySize: currentUser?.companySize || '',
+      companyName: currentUser?.companyName || "",
+      companySize: currentUser?.companySize || "",
       time: new Date(),
     };
-    // userDetails(userData)
+    setUserDetails(userData);
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/user`,
       userData
@@ -103,26 +106,42 @@ const AuthProvider = ({ children }) => {
 
   // Get token from server
   const getToken = async (email) => {
-    console.log(email);
+    // console.log(email);
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/jwt`,
       { email },
       { withCredentials: true }
     );
-    localStorage.setItem("token", JSON.stringify(data.token));
-    console.log(data);
+    localStorage.setItem("token", data.token);
+    // console.log(data);
+  };
+
+  useEffect(() => {
+    if (role === "admin") getAdminData();
+  }, [role]);
+  const getAdminData = async () => {
+    setDataLoading(true)
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin-route`, {withCredentials: true})
+      console.log(data)
+      setDatas(data)
+    } catch (error) {
+      console.log(error?.message)
+    }finally{
+      setDataLoading(false)
+    }
   };
 
   // onAuthStateChange
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth,async (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      console.log(currentUser);
       if (currentUser && currentUser?.email) {
-        
-        getRole(currentUser?.email)
+        // saveUser(currentUser);
+        getRole(currentUser?.email);
         getToken(currentUser.email);
       }
-      
 
       setLoading(false);
     });
@@ -145,7 +164,13 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     saveUser,
     role,
-    getRole
+    getRole,
+    roleLoading,
+    setRole,
+    setDatas,
+    Datas,
+    dataLoading,
+    getAdminData
   };
 
   return (

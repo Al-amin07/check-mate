@@ -45,7 +45,7 @@ const EmployeeSidebar = () => {
                 <span className='mx-4 font-medium'>Calender</span>
               </NavLink>
               <NavLink
-                to='/upload'
+                to='/uploaded'
                 className={({ isActive }) =>
                     `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
                       isActive ? 'bg-[#477553]  text-white border-0' : 'text-[#649474] bg-white'

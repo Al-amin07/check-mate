@@ -1,30 +1,35 @@
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import fb from "../../assets/images/fb.png";
 import g from "../../assets/images/g.png";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
-
+import { IoEye } from "react-icons/io5";
+import { IoEyeOffSharp } from "react-icons/io5";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { app } from "../../firebase/firebase.config";
+import { getAuth } from "firebase/auth";
 const Login = () => {
+  const auth = getAuth(app);
+  const [emailText, setEmailText] = useState();
   const { signIn, signInWithGoogle, saveUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+  const [isOpen, setIsOpen] = useState(false);
   const handleGoogleSignIn = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const result = await signInWithGoogle()
-      console.log(result)
-      saveUser(result.user)
-      navigate('/')
-
+      const result = await signInWithGoogle();
+      console.log(result);
+      saveUser(result.user);
+      navigate("/");
     } catch (error) {
-      toast.error(error.message)
-    }finally{
-      setLoading(false)
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,11 +40,27 @@ const Login = () => {
     try {
       const result = await signIn(email, password);
       console.log(result);
-      navigate('/')
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleFormgetPassword = async () => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    console.log(emailText);
+    const isValid = regex.test(emailText);
+    if (!isValid) {
+      toast.error("Please enter your email");
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, emailText);
+      toast.success("Please Check your email!!!");
+    } catch (error) {
+      toast.error(error?.message);
     }
   };
   return (
@@ -53,31 +74,54 @@ const Login = () => {
       <form onSubmit={handleLogin}>
         <div className="mb-4">
           <input
+            onChange={(e) => setEmailText(e.target.value)}
             type="email"
             name="email"
             placeholder="Email"
             className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
           />
         </div>
-        <div className="">
+        <div className=" relative">
           <input
-            type="password"
+            type={isOpen ? "text" : "password"}
             name="password"
             placeholder="Password"
             className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
           />
+
+          {isOpen ? (
+            <IoEyeOffSharp
+              onClick={() => setIsOpen(!isOpen)}
+              size={20}
+              className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2"
+            />
+          ) : (
+            <IoEye
+              onClick={() => setIsOpen(!isOpen)}
+              className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2"
+              size={20}
+            />
+          )}
         </div>
         <div className="mb-6 pl-2">
-          <a href="#" className="text-sm text-blue-500 hover:underline">
+          <a
+            href="#"
+            onClick={handleFormgetPassword}
+            className="text-sm text-blue-500 hover:underline"
+          >
             Forgotten password?
           </a>
         </div>
         <button
-        disabled={loading}
+          disabled={loading}
           type="submit"
           className="w-full disabled:from-green-900 disabled:to-green-950 text-white font-bold py-2 px-4 rounded-full bg-gradient-to-r from-[#4f7c5b] to-[#2e4f37] hover:from-green-800 hover:to-green-900"
         >
-          { loading ? <ImSpinner9 size={22} className=" animate-spin m-auto"/> : "Log In"}
+          {loading ? (
+            <ImSpinner9 size={22} className=" animate-spin m-auto" />
+          ) : (
+            "Log In"
+          )}
         </button>
       </form>
       <div className="mt-4">
@@ -102,7 +146,10 @@ const Login = () => {
           Login with Facebook
         </button>
 
-        <button onClick={handleGoogleSignIn} className="flex gap-3 font-semibold border border-green-800 items-center justify-center   text-green-800 rounded-full  py-1 hover:scale-105 ">
+        <button
+          onClick={handleGoogleSignIn}
+          className="flex gap-3 font-semibold border border-green-800 items-center justify-center   text-green-800 rounded-full  py-1 hover:scale-105 "
+        >
           <img src={g} className="h-6 w-6" alt="Google" />
           Login with Google
         </button>

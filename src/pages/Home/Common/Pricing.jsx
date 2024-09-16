@@ -17,11 +17,11 @@ const Pricing = () => {
     <div className=" flex flex-col justify-center min-h-screen py-10">
       {/* Heading */}
       <div className="text-center  mb-10">
-        <h2 className="text-3xl font-bold text-[#24402B]">
+        <h2 className="text-xl md:text-2xl md:w-9/12 lg:w-full lg:text-3xl mx-auto font-bold text-[#24402B]">
           For a limited time get the first 2 months of Checkmate’s Scaling Up
           package 50% off
         </h2>
-        <p className="text-lg text-[#24402B] my-4 w-7/12 mx-auto text-center">
+        <p className="text-lg text-[#24402B] my-4 w-full px-2 md:px-1 md:w-7/12 mx-auto text-center">
           Access our &apos;Scaling Up&apos; package for two months at half the
           price. Save time, grow revenue, and deliver a seamless customer
           experience with Skimmer&apos;s industry-leading pool service platform.
@@ -29,7 +29,7 @@ const Pricing = () => {
       </div>
 
       {/* Pricing Cards */}
-      <div className="max-w-5xl  mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-5xl  mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Getting Started */}
         <div className="bg-white transition-transform duration-500 text-center hover:bg-[#f9f9f9] hover:-translate-y-10 py-8  rounded-3xl shadow-xl">
           <h3 className="text-2xl  font-medium text-[#24402B]  ">
@@ -119,7 +119,7 @@ const Pricing = () => {
         onClick={() => {
           navigate(-1);
         }}
-        className="absolute  top-6 left-7 text-2xl font-bold py-2 px-4 rounded-xl hover:bg-green-50 text-green-900"
+        className="absolute  top-4 left-3 text-2xl font-bold py-2 px-4 rounded-xl hover:bg-green-50 text-green-900"
       >
         Back
       </Link>

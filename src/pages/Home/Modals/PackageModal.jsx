@@ -56,7 +56,7 @@ const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
                       Price:{" "}
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       required
                       name="price"
                       
@@ -80,7 +80,7 @@ const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
                     <label className=" font-medium whitespace-nowrap">
                      Package Details: 
                     </label>
-                    <textarea required name="details" className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md " rows={8} cols={10} ></textarea>
+                    <textarea required name="details" className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md "  rows={8} cols={10} ></textarea>
                   </div>
                   
 

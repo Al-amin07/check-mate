@@ -55,9 +55,10 @@ const TaskModal = ({ closeModal, isOpen, handleData }) => {
                       required
                       name="task"
                       placeholder="Task Name"
-                      className="w-2/3 px-4 py-[6px] border bg-[#f9f9f9] border-gray-300 rounded-full focus:outline-none"
+                      className="w-2/3 px-4 py-[6px] border bg-[#f9f9f9] border-gray-300 rounded-full focus:outline-1"
                     />
                   </div>
+                 
 
                   {/* Duration */}
                   <div className="flex items-center">
@@ -70,14 +71,14 @@ const TaskModal = ({ closeModal, isOpen, handleData }) => {
                         type="text"
                          placeholder="Enter Date"
                         name="date"
-                        className="w-1/2 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-none"
+                        className="w-1/2 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-1"
                       />
                       <input
                         type="text"
                         name="time"
                         placeholder="Enter Time"
                         required
-                        className="w-1/2  px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-none"
+                        className="w-1/2  px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-1"
                       />
                     </div>
                   </div>
@@ -92,7 +93,7 @@ const TaskModal = ({ closeModal, isOpen, handleData }) => {
                       type="text"
                       name="location"
                       placeholder="Location"
-                      className="w-2/3 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-none"
+                      className="w-2/3 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-1"
                     />
                   </div>
 
@@ -106,10 +107,23 @@ const TaskModal = ({ closeModal, isOpen, handleData }) => {
                       type="text"
                       name="ename"
                       placeholder="Employee Name"
-                      className="w-2/3 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-none"
+                      className="w-2/3 px-4 py-[6px] border border-gray-300 bg-[#f9f9f9] rounded-full focus:outline-1"
                     />
                   </div>
-
+                  <div className="flex gap-12">
+                    <label className=" whitespace-nowrap text-left pr-4 font-semibold">
+                      Task Details:
+                    </label>
+                    <textarea
+                      type="text"
+                      required
+                      name="details" 
+                      rows={3} 
+                      
+                    
+                      className=" border w-full bg-[#f9f9f9] border-gray-300 rounded-sm focus:outline-1"
+                    />
+                  </div>
                   {/* Confirm Button */}
                   <div className="flex justify-end ">
                     <button

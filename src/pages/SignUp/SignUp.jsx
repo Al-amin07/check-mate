@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import GetPhoto from "../../utils/GetPhoto";
+import { sendEmailVerification } from "firebase/auth";
 
 const SignUp = () => {
   const {
@@ -16,7 +17,7 @@ const SignUp = () => {
     signInWithGoogle,
     updateUserProfile,
     saveUser,
-    getRole
+    logOut
   } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -68,8 +69,9 @@ const SignUp = () => {
         companyName: cname,
         companySize: csize,
       });
-      getRole(email)
-      navigate("/");
+      sendEmailVerification(result.user)
+      logOut()
+      navigate("/login");
     } catch (error) {
       toast.error(error.message);
     } finally {

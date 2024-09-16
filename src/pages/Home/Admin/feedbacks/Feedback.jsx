@@ -56,41 +56,41 @@ const Feedback = () => {
       <div className="overflow-x-auto">
        
       </div>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-lg overflow-x-auto">
         <table className="min-w-full table-auto">
         <thead className="bgc text-white">
             <tr>
-              <th className="border border-gray-300 px-4 py-2">Sl</th>
-              <th className="border border-gray-300 px-4 py-2">Name</th>
-              <th className="border border-gray-300 px-4 py-2">Email</th>
-              <th className="border border-gray-300 px-4 py-2">Location</th>
-              <th className="border border-gray-300 px-4 py-2">Photos</th>
-              <th className="border border-gray-300 px-4 py-2">Comments</th>
-              <th className="border border-gray-300 px-4 py-2">Action</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Sl</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Name</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Email</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Location</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Photos</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Comments</th>
+              <th className="border border-gray-300 whitespace-nowrap py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {data.map((user, index) => (
               <tr key={user.id} className="text-center border-t">
-                <td className="px-4 border-r bg-[#f9f9f9] py-2">
+                <td className="px-4 border-r whitespace-nowrap bg-[#f9f9f9] py-2">
                   {String(index + 1).padStart(2, "0")}
                 </td>
-                <td className="px-2 border-r bg-[#f9f9f9] py-2">{user.name}</td>
-                <td className="px-2 border-r bg-[#f9f9f9] py-2">{user.email}</td>
-                <td className="px-2 border-r whitespace-normal break-words bg-[#f9f9f9] py-2">
-                {/* <a href={user.location} target="_blank" rel="noopener noreferrer" className="text-blue-500"> */}
-                    {user.location}
-                  {/* </a> */}
+                <td className="px-2 border-r whitespace-nowrap bg-[#f9f9f9] py-2">{user.name}</td>
+                <td className="px-2 border-r whitespace-nowrap bg-[#f9f9f9] py-2">{user.email}</td>
+                <td className="px-2 border-r  whitespace-normal break-words bg-[#f9f9f9] py-2">
+                <a href={user.location} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                    {user?.location.length>30 ? user?.location.slice(0,30) : user?.location}
+                  </a>
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border whitespace-nowrap border-gray-300 px-4 py-2">
                   <img src={user.photo} alt={user.name} className="h-12 w-12 object-cover rounded" />
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border whitespace-nowrap border-gray-300 px-4 py-2">
                   {user.comments.map((comment, idx) => (
                     <p key={idx}>{comment}</p>
                   ))}
                 </td>
-                <td className="px-2 py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
+                <td className="px-2 whitespace-nowrap py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
                   <button className="bg-blue-500 flex items-center text-white py-1 px-3 rounded-lg hover:bg-blue-600">
                     <IoEyeOutline />
                     View
@@ -106,7 +106,7 @@ const Feedback = () => {
         </table>
 
         {/* Pagination */}
-        <div className="bg-[#5A8C67] py-[2px] w-full flex justify-end gap-8 pr-8">
+        <div className="bg-[#5A8C67] py-[2px] w-auto flex justify-end gap-8 pr-8">
             <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
               <h3>Page per page</h3>
               <select className=" ml-1 bgc text-white">

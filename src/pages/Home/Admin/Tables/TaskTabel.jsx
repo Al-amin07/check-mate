@@ -3,7 +3,7 @@ import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { GrCaretPrevious } from "react-icons/gr";
 
-const TaskTable = () => {
+const TaskTable = ({data}) => {
   const tasks = [
     {
       id: 1,
@@ -59,78 +59,55 @@ const TaskTable = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-auto">
-      <table className="min-w-full table-auto overflow-x-auto custom-table  border-spacing-y-2">
+    <div className="bg-white rounded-lg shadow-lg w-full overflow-auto">
+      <table className="min-w-full table-auto  custom-table  border-spacing-y-2">
         <thead className="bgc text-white">
           <tr>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Sl</th>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Task Name</th>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Duration</th>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Location</th>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Employee</th>
-            <th className="px-4 border-r  text-sm md:text-base  font-normal py-3">Status</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Sl</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Task Name</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Duration</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Location</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Employee</th>
+            <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">Status</th>
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task) => (
-            <tr key={task.id} className="text-center border-t py-2">
-              <td className="px-4 border-r border-b border-slate-400 text-green-800 bg-[#f9f9f9] py-2">
-                {task.id}
+          {data?.map((task, index) => (
+            <tr key={task._id} className="text-center border-t ">
+              <td className=" border-r text-sm whitespace-nowrap  border-b border-slate-400 text-green-800 bg-[#f9f9f9] ">
+                {index  + 1}
               </td>
-              <td className="px-4 border-r border-b border-slate-400 text-green-800 bg-[#f9f9f9] py-2">
-                {task.name}
+              <td className=" border-r text-sm border-b whitespace-nowrap border-slate-400 text-green-800 bg-[#f9f9f9] ">
+                {task?.task_Name}
               </td>
-              <td className="px-4 border-r border-b border-slate-400 text-green-800 bg-[#f9f9f9] py-2">{`${task.date}  ${task.time}`}</td>
-              <td className="px-4 border-r border-b border-slate-400 text-green-800 bg-[#f9f9f9] py-2">
-                {/* {task.location} */}
-                Lorem ipsum dolor sit amet,.
+              <td className=" border-r text-sm border-b border-slate-400 text-green-800 bg-[#f9f9f9] whitespace-nowrap ">
+                {/* {`${task.date}  ${task.time}`} */}
+                {task?.Duration}
+                </td>
+              <td className=" border-r text-sm border-b border-slate-400 text-green-800 bg-[#f9f9f9]  whitespace-nowrap">
+                {task?.Location}
+               
               </td>
-              <td className="px-4 border-r border-b border-slate-400 text-green-800 bg-[#f9f9f9] py-2">
-                {task.employee}
+              <td className=" border-r text-sm whitespace-nowrap border-b border-slate-400 text-green-800 bg-[#f9f9f9] ">
+                {task?.Employee}
               </td>
-              <td className="px-4 font-semibold border-slate-400 border-b bg-[#f9f9f9] text-green-800 py-2">
+              <td className=" font-semibold text-sm whitespace-nowrap border-slate-400 border-b bg-[#f9f9f9] text-green-800 ">
                 <span
                   className={`
-                  ${task?.status === "Completed" && "text-green-500"}
-                  ${task?.status === "In progress" && "text-yellow-500"}
-                  ${task?.status === "Incomplete" && "text-red-500"}
+                  ${task?.Status === "Completed" && "text-green-500"}
+                  ${task?.Status === "In progress" && "text-yellow-500"}
+                  ${task?.Status === "Incomplete" && "text-red-500"}
                   `}
                 >
-                  {task.status}
+                  {task?.Status}
                 </span>
               </td>
             </tr>
           ))}
-          {/* <tr className="bgc">
-            <th className="px-4 py-1  font-normal text-white"></th>
-            <th className="px-4 py-1 font-normal text-white"></th>
-            <th className="px-4 py-1  font-normal text-white"></th>
-            <th className="px-4 py-1 text-right font-normal text-sm text-white">
-              Page Per Page
-              <select className=" ml-1 bgc text-white">
-                <option className="bg-white text-black" value="5">
-                  5
-                </option>
-                <option className="bg-white text-black" value="7">
-                  7
-                </option>
-                <option className="bg-white text-black" value="10">
-                  10
-                </option>
-              </select>
-            </th>
-            <th className="px-4   font-normal text-right text-white">
-              <TbPlayerTrackPrevFilled className="inline-block" />
-              <GrCaretPrevious className="inline-block" />
-            </th>
-            <th className="px-4 border-r flex items-center gap-1 text-left pt-[6px] font-normal text-white ">
-              <GrCaretNext className="text-white " />
-              <TbPlayerTrackNextFilled className="text-white" />
-            </th>
-          </tr> */}
+        
         </tbody>
       </table>
-          <div className="bg-[#5A8C67] py-[1px] w-full flex justify-end gap-8 pr-8">
+          <div className="bg-[#5A8C67] py-[1px] w-auto flex justify-end gap-8 pr-8">
             <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
               <h3>Page per page</h3>
               <select className=" ml-1 bgc text-white">

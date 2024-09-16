@@ -4,12 +4,16 @@ import { Helmet } from 'react-helmet-async'
 import AdminHome from './Admin/AdminHome'
 import useAuth from '../../hooks/useAuth'
 import EmployeeHome from './Employee/EmployeeHome';
+import useRole from '../../hooks/useRole';
+import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 
 
 
 const Home = () => {
-  const { role } = useAuth();
+  // const { role, roleLoading } = useAuth();
+  const [role, isLoading] = useRole();
   console.log(role)
+  if(isLoading) return <LoadingSpinner />
   return (
     <div>
       <Helmet>

@@ -31,13 +31,13 @@ const users = [
 const UserTable = ({ title }) => {
   return (
     <div className="mb-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-md font-semibold bg-base-200 hover:bg-green-100 text-green-700 py-2 px-4 rounded-lg mb-2 inline-block">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="md:text-lg text-sm whitespace-nowrap font-semibold bg-base-200 hover:bg-green-100 text-green-700 py-2 px-4 rounded-lg mb-2 inline-block">
           {title}
         </h3>
 
         {/* Search and Date Picker */}
-        <div className="flex items-center justify-end gap-4 mb-4">
+        <div className="flex items-center justify-end gap-4 ">
           <div>
             <button className="flex bgc text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
               <IoSearchSharp size={22} />
@@ -55,33 +55,33 @@ const UserTable = ({ title }) => {
       </div>
 
       {/* User Table */}
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-lg overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead className=" text-white">
             <tr className="bg-[#5A8C67]">
-              <th className="px-4 border-r py-2">Sl</th>
-              <th className="px-4 border-r py-2">Name</th>
-              <th className="px-4 border-r py-2">Email</th>
-              <th className="px-4 border-r py-2">Subscription Status</th>
-              <th className="px-4 border-r py-2">Action</th>
+              <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">Sl</th>
+              <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">Name</th>
+              <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">Email</th>
+              <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">Subscription Status</th>
+              <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
               <tr key={user.id} className="text-center border-t">
-                <td className="px-4 border-r bg-[#f9f9f9] py-2">
+                <td className="px-4 whitespace-nowrap border-r bg-[#f9f9f9] py-2">
                   {String(index + 1).padStart(2, "0")}
                 </td>
-                <td className="px-2 border-r bg-[#f9f9f9] py-2">{user.name}</td>
-                <td className="px-2 border-r bg-[#f9f9f9] py-2">{user.email}</td>
-                <td className="px-2 border-r bg-[#f9f9f9] py-2">
+                <td className="px-2 whitespace-nowrap border-r bg-[#f9f9f9] py-2">{user.name}</td>
+                <td className="px-2 whitespace-nowrap border-r bg-[#f9f9f9] py-2">{user.email}</td>
+                <td className="px-2 whitespace-nowrap border-r bg-[#f9f9f9] py-2">
                   <span
                     className={`text-${user.statusColor}-500 border-r bg-[#f9f9f9] font-semibold`}
                   >
                     {user.status}
                   </span>
                 </td>
-                <td className="px-2 py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
+                <td className="px-2 whitespace-nowrap py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
                   <button className="bg-blue-500 flex items-center text-white py-1 px-3 rounded-lg hover:bg-blue-600">
                     <IoEyeOutline />
                     View
@@ -97,7 +97,7 @@ const UserTable = ({ title }) => {
         </table>
 
         {/* Pagination */}
-        <div className="bg-[#5A8C67] py-[2px] w-full flex justify-end gap-8 pr-8">
+        <div className="bg-[#5A8C67] py-[2px] w-auto flex justify-end gap-8 pr-8">
             <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
               <h3>Page per page</h3>
               <select className=" ml-1 bgc text-white">

@@ -222,7 +222,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="text-right">
-            <Link to={'/price'} className="text-green-600 bg-[#f9f9f9] hover:bg-slate-300 py-[6px] px-3 rounded-md flex items-center gap-2 hover:text-green-800">
+            <Link to={'/price'} className="text-green-600 w-28 bg-[#f9f9f9] hover:bg-slate-300 py-[6px] px-3 rounded-md flex items-center gap-2 hover:text-green-800 whitespace-nowrap">
               Upgrade Plan
             </Link>
           </div>

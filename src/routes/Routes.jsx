@@ -15,6 +15,7 @@ import AdminRoute from "./AdminRoute";
 import Profile from "../pages/Home/Employee/Profile/Profile";
 import Pricing from "../pages/Home/Common/Pricing";
 import Calender from "../pages/Home/Employee/Calender/Calender";
+import Uploaded from "../pages/Home/Employee/Photo/Uploaded";
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +87,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/uploaded",
+        element: (
+          <PrivateRoute>
+            <Uploaded />
           </PrivateRoute>
         ),
       },
