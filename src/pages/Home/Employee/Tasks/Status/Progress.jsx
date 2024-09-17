@@ -1,8 +1,11 @@
 import { BsThreeDots } from "react-icons/bs";
 import ProgressCard from "../ProgressCard";
 import { useState } from "react";
+import MapComponent from "../../Map/MapComponent";
+import LivePhoto from "../Photo/LivePhoto";
 
-const Progress = () => {
+const Progress = ({data}) => {
+  const address = 'Uttara Dhaka 1230 Bangladesh';
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
@@ -16,8 +19,12 @@ const Progress = () => {
       </h2>
      {
         isOpen &&  <div className="flex flex-col gap-5">
-        <ProgressCard />
-        <ProgressCard />
+     {
+      data?.map(item => <ProgressCard key={item?._id} item={item}/>)
+     }
+     {/* <LivePhoto /> */}
+     {/* <MapComponent address={address} /> */}
+        
       </div>
      }
     </div>

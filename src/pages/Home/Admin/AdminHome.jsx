@@ -10,13 +10,16 @@ import useAuth from "../../../hooks/useAuth";
 
 const AdminHome = () => {
   const {
-    Datas: { totalSubscribers, totalTasks, totalUsers },
+    userDetails: { totalSubscribers, totalTasks, totalUsers },
+    adminLoading,
+    userDetails
   } = useAuth();
-  // console.log(Datas)
+  console.log(userDetails)
   const totalAmount = totalSubscribers?.reduce(
     (sum, item) => item?.subscriptionDetails?.price + sum,
     0
   );
+  // if(adminLoading) return <p>Loading...</p>
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -56,7 +59,7 @@ const AdminHome = () => {
         <div className="flex flex-col xl:flex-row  gap-5">
           {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-0"> */}
           <div className="flex-1">
-            <TaskTable data={totalTasks?.slice(0,5)} />
+            <TaskTable data={totalTasks?.slice(0, 5)} />
           </div>
           <div className=" w-3/4 mx-auto lg:w-64 border p-4 border-green-900 rounded-md flex flex-col h-[350px]">
             <h2 className="text-xl text-center">Tasks Activities</h2>

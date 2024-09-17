@@ -4,12 +4,14 @@ import { useState } from "react";
 import CreatePackageModal from "../../Modals/CreatePackageModal";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import PropTypes from 'prop-types'
-import useAuth from "../../../../hooks/useAuth";
+import PropTypes from "prop-types";
+
 const PackageCard = ({ item, index }) => {
   const axiosSecure = useAxiosSecure();
-  const { getAdminData } = useAuth();
-  const [loading, setLoading] = useState(false)
+ 
+  const [loading, setLoading] = useState(false);
+  // console.log(totalSubscribers)
+  const [subItem, setSubItem] = useState(item);
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
@@ -17,25 +19,27 @@ const PackageCard = ({ item, index }) => {
   const [details, setDetails] = useState(item?.details);
   const handleData = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     console.log(details);
     const name = e.target.name.value || item?.name;
     const price = e.target.price.value || item?.price;
     const duration = e.target.duration.value || item?.duration;
     console.log(name, price, duration, details);
-    const packageDetails = {name, price, duration, details}
-   
+    const packageDetails = { name, price, duration, details };
+
     try {
-      const { data } = await axiosSecure.put(`/packages/${item?._id}`, packageDetails)
-      console.log(data)
-      if(data?.modifiedCount){
-        toast.success('Package Updated!!!');
-        getAdminData()
-        
+      const { data } = await axiosSecure.put(
+        `/packages/${item?._id}`,
+        packageDetails
+      );
+      console.log(data);
+      if (data?.modifiedCount) {
+        toast.success("Package Updated!!!");
+        setSubItem({ ...subItem, name, price, duration, details });
       }
     } catch (error) {
-      toast.error(error?.message)
-    }finally{
+      toast.error(error?.message);
+    } finally {
       setIsOpen(false);
       setLoading(false);
     }
@@ -72,7 +76,7 @@ const PackageCard = ({ item, index }) => {
             type="text"
             required
             name="pname"
-            value={item?.name}
+            value={subItem?.name}
             disabled
             className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
           />
@@ -83,7 +87,7 @@ const PackageCard = ({ item, index }) => {
             type="text"
             required
             name="price"
-            value={'$' + item?.price}
+            value={"$" + subItem?.price}
             disabled
             className="w-full ml-[68px] md:ml-0 border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
           />
@@ -94,7 +98,7 @@ const PackageCard = ({ item, index }) => {
             type="text"
             required
             name="duration"
-            value={item?.duration}
+            value={subItem?.duration}
             disabled
             className="w-full border border-[#D1DED4] ml-12 md:ml-0 bg-[#f9f9f9] py-1 px-5 rounded-full "
           />
@@ -105,7 +109,7 @@ const PackageCard = ({ item, index }) => {
           Package Details:
         </label>
         <ul className="w-full p-2 md:p-8 bg-[#f9f9f9] rounded-lg border  list-disc list-inside">
-          {item?.details?.map((pack) => (
+          {subItem?.details?.map((pack) => (
             <li key={pack}>{pack}</li>
           ))}
         </ul>
@@ -116,7 +120,6 @@ const PackageCard = ({ item, index }) => {
 PackageCard.propTypes = {
   item: PropTypes.object,
   index: PropTypes.number,
-  
-}
+};
 
 export default PackageCard;

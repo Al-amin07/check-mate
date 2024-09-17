@@ -6,10 +6,12 @@ import TaskModal from "../Modals/TaskModal";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
 const Tasks = () => {
   const {
-    Datas: { totalTasks },
-    dataLoading,
+    userDetails: { totalTasks },
+
+    user,
   } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,24 +26,46 @@ const Tasks = () => {
     const task_Name = e.target.task.value;
     const date = e.target.date.value;
     const time = e.target.time.value;
-    const Duration = date + " " + time;
     const Location = e.target.task.value;
     const Details = e.target.details.value;
     const Employee = e.target.ename.value;
-    console.log(task_Name, Duration, Location, Employee, Details);
+    console.log(task_Name, Location, Employee, Details);
     const taskData = {
       task_Name,
-      Duration,
+      date,
+      time,
       Location,
       Employee,
       Details,
       Status: "Pending",
+      assignedBy: {
+        name: user?.displayName,
+        image: user?.photoURL,
+      },
     };
     try {
       const { data } = await axiosSecure.post("/tasks", taskData);
       console.log(data);
-      if (data?.insertedId) {
+
+      if (data?.result?.insertedId) {
+        const serviceId = "service_3ieawc7";
+        const publicKey = "_1OxL25JLzWngpMGb";
+        const templateId = "template_0mr7v1i";
+        const tamplateParams = {
+          from_name: user?.displayName,
+          from_email: user?.email,
+          to_name: Employee,
+          to_email: data?.email,
+
+          message: `You have been assigned a new task: ${task_Name}. Due date: ${
+            date + " " + time
+          }`,
+        };
         toast.success(`Task Assigned to ${Employee}`);
+        emailjs
+          .send(serviceId, templateId, tamplateParams, publicKey)
+          .then(() => console.log("Email Send!!!"))
+          .catch((error) => console.log(error?.message));
         setIsOpen(false);
         totalTasks.push(taskData);
       } else {

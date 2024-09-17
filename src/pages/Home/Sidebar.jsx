@@ -13,8 +13,8 @@ import EmployeeSidebar from "./Employee/EmployeeSidebar";
 import useRole from "../../hooks/useRole";
 
 const Sidebar = () => {
-  const { logOut } = useAuth();
-  const [role, isLoading] = useRole();
+  const { logOut, role, roleLoading } = useAuth();
+  // const [role, isLoading] = useRole();
   const [isActive, setActive] = useState(true);
 
   // Sidebar Responsive Handler
@@ -73,11 +73,11 @@ const Sidebar = () => {
             {/*  Menu Items */}
             <nav>
               {/* Statistics */}
-              {isLoading && (
+              {roleLoading && (
                 <p className="text-lg text-center">Loading...</p>
               )}
-              {(role === "admin" && !isLoading) && <AdminSidebar />}
-              {(role === "employee" && !isLoading) && <EmployeeSidebar />}
+              {(role === "admin" && !roleLoading) && <AdminSidebar />}
+              {(role === "employee" && !roleLoading) && <EmployeeSidebar />}
             </nav>
           </div>
         </div>

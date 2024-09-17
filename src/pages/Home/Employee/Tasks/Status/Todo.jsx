@@ -2,7 +2,7 @@ import { BsThreeDots } from "react-icons/bs";
 import TodoCard from "../TodoCard";
 import { useState } from "react";
 
-const Todo = () => {
+const Todo = ({data}) => {
     const [isOpen, setIsOpen] = useState(true)
   return (
     <div>
@@ -11,8 +11,9 @@ const Todo = () => {
       </h2>
       {
         isOpen && <div className="flex flex-col gap-5">
-        <TodoCard />
-        <TodoCard />
+       {
+        data?.map(item => <TodoCard key={item?._id} item={item}/>)
+       }
       </div>
       }
     </div>

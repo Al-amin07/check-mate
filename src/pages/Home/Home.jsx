@@ -10,10 +10,10 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 
 
 const Home = () => {
-  // const { role, roleLoading } = useAuth();
-  const [role, isLoading] = useRole();
+  const { role, roleLoading } = useAuth();
+  // const [role, isLoading] = useRole();
   console.log(role)
-  if(isLoading) return <LoadingSpinner />
+  if(roleLoading) return <LoadingSpinner />
   return (
     <div>
       <Helmet>

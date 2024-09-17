@@ -5,10 +5,10 @@ import useRole from "../hooks/useRole";
 
 
 const AdminRoute = ({children}) => {
-    const { user , loading} = useAuth();
-    const [role, isLoading] = useRole();
+    const { user , roleLoading, loading, role} = useAuth();
+    // const [role, isLoading] = useRole();
     const location = useLocation();
-    if(loading || isLoading) return <LoadingSpinner />
+    if(loading || roleLoading) return <LoadingSpinner />
     if(user && role === 'admin') return children;
     return <Navigate to={'/login'} state={location?.pathname}/>
 };

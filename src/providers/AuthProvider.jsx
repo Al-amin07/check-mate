@@ -19,10 +19,8 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
-  
   const [user, setUser] = useState(null);
-  const [Datas, setDatas] = useState({});
-  const [dataLoading, setDataLoading] = useState(false)
+
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
   const [roleLoading, setRoleLoading] = useState(false);
@@ -53,6 +51,7 @@ const AuthProvider = ({ children }) => {
       withCredentials: true,
     });
     localStorage.setItem("token", "");
+    setUser(null);
     return signOut(auth);
   };
   // console.log(userDetails);
@@ -72,11 +71,10 @@ const AuthProvider = ({ children }) => {
       );
 
       setUserDetails(data);
-
-      if (data?.role) {
-        setRole(data?.role);
+      console.log(data);
+      if (data?.user?.role) {
+        setRole(data?.user?.role);
       }
-      return data?.role;
     } catch (error) {
       console.log(error?.message);
     } finally {
@@ -106,30 +104,12 @@ const AuthProvider = ({ children }) => {
 
   // Get token from server
   const getToken = async (email) => {
-    // console.log(email);
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/jwt`,
       { email },
       { withCredentials: true }
     );
     localStorage.setItem("token", data.token);
-    // console.log(data);
-  };
-
-  useEffect(() => {
-    if (role === "admin") getAdminData();
-  }, [role]);
-  const getAdminData = async () => {
-    setDataLoading(true)
-    try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin-route`, {withCredentials: true})
-      console.log(data)
-      setDatas(data)
-    } catch (error) {
-      console.log(error?.message)
-    }finally{
-      setDataLoading(false)
-    }
   };
 
   // onAuthStateChange
@@ -161,16 +141,23 @@ const AuthProvider = ({ children }) => {
     resetPassword,
     logOut,
     userDetails,
+    setUserDetails,
     updateUserProfile,
     saveUser,
     role,
     getRole,
     roleLoading,
     setRole,
-    setDatas,
-    Datas,
-    dataLoading,
-    getAdminData
+    // Admin
+
+    // Tanstake
+    // adminData,
+    // adminLoading,
+    // adminRefetch,
+    // Employee
+    // employeeData,
+    // employeeLoading,
+    // employeeRefetch,
   };
 
   return (

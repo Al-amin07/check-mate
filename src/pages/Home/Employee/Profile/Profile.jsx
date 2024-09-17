@@ -5,35 +5,79 @@ import { FaPencil } from "react-icons/fa6";
 import PersonalModal from "../../Modals/PersonalModal";
 import ProfessionalModal from "../../Modals/ProfessionalModal";
 import { Link } from "react-router-dom";
-
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 const Profile = () => {
-  const { user, userDetails } = useAuth();
-  
+  const {
+    user,
+    userDetails: { user: userDetails },
+    updateUserProfile,
+  } = useAuth();
+
+  const axiosSecure = useAxiosSecure();
+  const [profile, setProfile] = useState(userDetails);
   const [isEditPersonal, setIsEditPersonal] = useState(false);
   const [isEditProfessional, setIsEditProfessional] = useState(false);
-  
-  console.log(userDetails);
+
   const closeModal = () => {
-    setIsEditPersonal(false)
-  }
+    setIsEditPersonal(false);
+  };
   const proCloseModal = () => {
-    setIsEditProfessional(false)
-  }
-  const handleProfrssionalData = async e => {
+    setIsEditProfessional(false);
+  };
+  const handleProfrssionalData = async (e) => {
     e.preventDefault();
     const companyName = e.target.cname.value;
     const companySize = e.target.csize.value;
     const location = e.target.location.value;
-    console.log(companyName, companySize, location)
-  }
+    console.log(companyName, companySize, location);
+    const details = {
+      companyName,
+      companySize,
+      location,
+      isEditPersonal: false,
+    };
+    try {
+      const { data } = await axiosSecure.patch(
+        `/update-user/${user?.email}`,
+        details
+      );
+      if (data.modifiedCount) {
+        toast.success("Profile Edited!!!");
+        setProfile({ ...profile, companyName, companySize, location });
+      }
+      console.log();
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setIsEditProfessional(false);
+    }
+  };
   const handlePersonalData = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const phone = e.target.phone.value;
     const address = e.target.address.value;
-    const email = user?.email
-    console.log(name, phone, address, email)
-  }
+    const email = user?.email;
+
+    const details = { email, name, phone, address, isPersonEdit: true };
+    try {
+      const { data } = await axiosSecure.patch(
+        `/update-user/${user?.email}`,
+        details
+      );
+      if (data.modifiedCount) {
+        toast.success("Profile Edited!!!");
+        setProfile({ ...profile, name, phone, address });
+        await updateUserProfile(name, user?.photoURL);
+      }
+      console.log();
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setIsEditPersonal(false);
+    }
+  };
   return (
     <div className=" p-6 md:p-8 lg:p-16 bg-white">
       {/* Personal Information Section */}
@@ -44,7 +88,7 @@ const Profile = () => {
           <div className="flex flex-1 md:flex-row flex-col items-center gap-10 mb-4">
             <img
               // src={user?.photoURL} // Add the actual image source here
-              src={userDetails?.image} // Add the actual image source here
+              src={profile?.image} // Add the actual image source here
               alt="Profile"
               className="w-36 h-36 border-[2px] border-green-600  rounded-full"
             />
@@ -54,7 +98,7 @@ const Profile = () => {
                 <input
                   type="text"
                   disabled
-                  value={userDetails?.name}
+                  value={profile?.name}
                   className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full ml-5"
                 />
               </div>
@@ -62,7 +106,7 @@ const Profile = () => {
                 <label className=" font-medium">Email: </label>
                 <input
                   type="email"
-                  value={userDetails?.email}
+                  value={profile?.email}
                   disabled
                   className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full ml-5"
                 />
@@ -72,7 +116,7 @@ const Profile = () => {
                 <input
                   type="text"
                   disabled
-                  value={userDetails?.phone}
+                  value={profile?.phone}
                   readOnly
                   className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full ml-4 "
                 />
@@ -82,7 +126,7 @@ const Profile = () => {
                 <input
                   type="text"
                   disabled
-                  value={userDetails?.address}
+                  value={profile?.address}
                   className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full ml-[2px] focus:outline-none focus:ring"
                 />
               </div>
@@ -90,10 +134,18 @@ const Profile = () => {
           </div>
 
           <div className="flex xl:flex-1  justify-end items-start  mb-4">
-            <button onClick={() => setIsEditPersonal(true)} className="text-green-600 bg-[#f9f9f9] hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800">
+            <button
+              onClick={() => setIsEditPersonal(true)}
+              className="text-green-600 bg-[#f9f9f9] hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
+            >
               <FaPencil size={18} /> Edit
             </button>
-            <PersonalModal userDetails={userDetails} isOpen={isEditPersonal} handleData={handlePersonalData} closeModal={closeModal} />
+            <PersonalModal
+              userDetails={userDetails}
+              isOpen={isEditPersonal}
+              handleData={handlePersonalData}
+              closeModal={closeModal}
+            />
           </div>
         </div>
       </div>
@@ -111,8 +163,7 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                value={userDetails?.companyName}
-                
+                value={profile?.companyName}
                 className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
               />
             </div>
@@ -123,7 +174,7 @@ const Profile = () => {
               <input
                 type="text"
                 disabled
-                value={userDetails?.companySize}
+                value={profile?.companySize}
                 className="w-full border ml-1 border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
               />
             </div>
@@ -131,7 +182,7 @@ const Profile = () => {
               <label className=" font-medium">Designation: </label>
               <input
                 type="text"
-                value={userDetails?.role}
+                value={profile?.role}
                 disabled
                 className="w-full border ml-7 border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
               />
@@ -141,7 +192,7 @@ const Profile = () => {
               <input
                 type="text"
                 disabled
-                value={userDetails?.location || ""}
+                value={profile?.location || ""}
                 className="w-full border ml-[52px] border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full focus:outline-none focus:ring"
               />
             </div>
@@ -155,10 +206,18 @@ const Profile = () => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093717!2d144.96305771550433!3d-37.81627944252165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5777d5e5a94b23d!2sVictoria%20State%20Library!5e0!3m2!1sen!2sau!4v1613963630043!5m2!1sen!2sau"
             ></iframe>
             <div className="flex xl:flex-1  justify-end items-start  mb-4">
-              <button onClick={() => setIsEditProfessional(true)} className="text-green-600 bg-[#f9f9f9] hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800">
+              <button
+                onClick={() => setIsEditProfessional(true)}
+                className="text-green-600 bg-[#f9f9f9] hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
+              >
                 <FaPencil size={18} /> Edit
               </button>
-              <ProfessionalModal isOpen={isEditProfessional} closeModal={proCloseModal} handleData={handleProfrssionalData} userDetails={userDetails}/>
+              <ProfessionalModal
+                isOpen={isEditProfessional}
+                closeModal={proCloseModal}
+                handleData={handleProfrssionalData}
+                userDetails={userDetails}
+              />
             </div>
           </div>
         </div>
@@ -222,7 +281,10 @@ const Profile = () => {
             </div>
           </div>
           <div className="text-right">
-            <Link to={'/price'} className="text-green-600 w-28 bg-[#f9f9f9] hover:bg-slate-300 py-[6px] px-3 rounded-md flex items-center gap-2 hover:text-green-800 whitespace-nowrap">
+            <Link
+              to={"/price"}
+              className="text-green-600 w-28 bg-[#f9f9f9] hover:bg-slate-300 py-[6px] px-3 rounded-md flex items-center gap-2 hover:text-green-800 whitespace-nowrap"
+            >
               Upgrade Plan
             </Link>
           </div>

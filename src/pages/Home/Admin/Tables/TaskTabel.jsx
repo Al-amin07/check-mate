@@ -4,59 +4,7 @@ import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { GrCaretPrevious } from "react-icons/gr";
 
 const TaskTable = ({data}) => {
-  const tasks = [
-    {
-      id: 1,
-      name: "Project design",
-      date: "Sept 22",
-      time: "4:00 PM",
-      location: "Location",
-      employee: "John D",
-      status: "Completed",
-      statusColor: "green",
-    },
-    {
-      id: 2,
-      name: "Washing car",
-      date: "Sept 18",
-      time: "2:00 PM",
-      location: "Location",
-      employee: "Khalid",
-      status: "Incomplete",
-      statusColor: "red",
-    },
-    {
-      id: 3,
-      name: "Deliver product",
-      date: "Sept 23",
-      time: "4:00 PM",
-      location: "Location",
-      employee: "Afrahim",
-      status: "In progress",
-      statusColor: "yellow",
-    },
-    {
-      id: 4,
-      name: "Take a ride",
-      date: "Sept 12",
-      time: "1:00 PM",
-      location: "Location",
-      employee: "Jack",
-      status: "Completed",
-      statusColor: "green",
-    },
-    {
-      id: 5,
-      name: "Take a ride",
-      date: "Sept 12",
-      time: "1:00 PM",
-      location: "Location",
-      employee: "Jack",
-      status: "Completed",
-      statusColor: "green",
-    },
-   
-  ];
+ 
 
   return (
     <div className="bg-white rounded-lg shadow-lg w-full overflow-auto">
@@ -82,7 +30,9 @@ const TaskTable = ({data}) => {
               </td>
               <td className=" border-r text-sm border-b border-slate-400 text-green-800 bg-[#f9f9f9] whitespace-nowrap ">
                 {/* {`${task.date}  ${task.time}`} */}
-                {task?.Duration}
+                {task?.date} <br />
+                {task?.time}
+
                 </td>
               <td className=" border-r text-sm border-b border-slate-400 text-green-800 bg-[#f9f9f9]  whitespace-nowrap">
                 {task?.Location}

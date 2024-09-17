@@ -58,7 +58,7 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index, setDe
                       Price:{" "}
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       required
                       name="price"
                       defaultValue={item?.price}

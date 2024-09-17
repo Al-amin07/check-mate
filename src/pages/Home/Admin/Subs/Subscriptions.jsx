@@ -16,16 +16,15 @@ import toast from "react-hot-toast";
 
 const Subscriptions = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const {
-    Datas: { totalSubscribers },
-    Datas: { totalPackages },
+    userDetails: { totalSubscribers, totalPackages },
   } = useAuth();
   const [isChange, setIsChange] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log(totalSubscribers, totalPackages);
+  
 
   const packages = [
     { name: "Total", count: 10, amount: "$100" },
@@ -34,30 +33,30 @@ const Subscriptions = () => {
     { name: "Home Program", count: 3, amount: "$25" },
   ];
 
-
   const handleData = async (e) => {
     e.preventDefault();
     const name = e.target.pname.value;
     const price = e.target.price.value;
     const duration = e.target.duration.value;
     const detailsList = e.target.details.value;
-    const details = detailsList.split('\n')
+    const details = detailsList.split("\n");
     console.log(name, price, duration, details);
     const packageDetails = {
-      name,price,duration,
-      details
-    }
+      name,
+      price,
+      duration,
+      details,
+    };
     try {
-      const { data } = await axiosSecure.post('/packages', packageDetails);
-      console.log(data)
-      if(data.insertedId){
-        toast.success('Package Added!!!')
-        totalPackages.push(packageDetails)
+      const { data } = await axiosSecure.post("/packages", packageDetails);
+      console.log(data);
+      if (data.insertedId) {
+        toast.success("Package Added!!!");
+        totalPackages.push(packageDetails);
       }
     } catch (error) {
-      toast.error(error?.message)
-    }finally{
-
+      toast.error(error?.message);
+    } finally {
       setIsOpen(false);
     }
   };
@@ -154,7 +153,6 @@ const Subscriptions = () => {
                     <th className="whitespace-nowrap px-1 border-r py-2">
                       Subscription Details
                     </th>
-                  
                   </tr>
                 </thead>
                 <tbody>
@@ -170,17 +168,17 @@ const Subscriptions = () => {
                         {user.email}
                       </td>
                       <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
-                        {user?.companyDetails?.companyName} <br /> <span className="text-slate-500 text-sm mt-0">
-                        {user?.companyDetails?.employees} employees
+                        {user?.companyDetails?.companyName} <br />{" "}
+                        <span className="text-slate-500 text-sm mt-0">
+                          {user?.companyDetails?.employees} employees
                         </span>
                       </td>
                       <td className="  border-r col bg-[#f9f9f9] py-2">
-                     
-                        {user?.subscriptionDetails?.plan} <br /> <span className="text-slate-500 text-sm mt-0">
-                        ${user?.subscriptionDetails?.price} 
+                        {user?.subscriptionDetails?.plan} <br />{" "}
+                        <span className="text-slate-500 text-sm mt-0">
+                          ${user?.subscriptionDetails?.price}
                         </span>
                       </td>
-                   
                     </tr>
                   ))}
                 </tbody>
