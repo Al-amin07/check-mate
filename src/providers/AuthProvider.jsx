@@ -92,6 +92,16 @@ const AuthProvider = ({ children }) => {
       isVerified: false,
       companyName: currentUser?.companyName || "",
       companySize: currentUser?.companySize || "",
+      paidType: "Unpaid",
+      subscription: {
+        type: "No Plan",
+        status: "unpaid",
+        startedDate: null,
+        endDate: null,
+        trailEndDate: null,
+        price: 0,
+        isFirst: true,
+      },
       time: new Date(),
     };
     setUserDetails(userData);

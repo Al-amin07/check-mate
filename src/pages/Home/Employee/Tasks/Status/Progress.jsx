@@ -1,11 +1,10 @@
 import { BsThreeDots } from "react-icons/bs";
 import ProgressCard from "../ProgressCard";
 import { useState } from "react";
-import MapComponent from "../../Map/MapComponent";
-import LivePhoto from "../Photo/LivePhoto";
 
-const Progress = ({data}) => {
-  const address = 'Uttara Dhaka 1230 Bangladesh';
+
+import PropTypes from "prop-types";
+const Progress = ({ data, refetch }) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
@@ -17,18 +16,19 @@ const Progress = ({data}) => {
           size={32}
         />
       </h2>
-     {
-        isOpen &&  <div className="flex flex-col gap-5">
-     {
-      data?.map(item => <ProgressCard key={item?._id} item={item}/>)
-     }
-     {/* <LivePhoto /> */}
-     {/* <MapComponent address={address} /> */}
-        
-      </div>
-     }
+      {isOpen && (
+        <div className="flex flex-col gap-5">
+          {data?.map((item) => (
+            <ProgressCard refetch={refetch} key={item?._id} item={item} />
+          ))}
+          
+        </div>
+      )}
     </div>
   );
 };
-
+Progress.propTypes = {
+  data: PropTypes.array,
+  refetch: PropTypes.func,
+}
 export default Progress;

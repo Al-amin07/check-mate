@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title>StayVista | Vacation Homes & Condo Rentals</title>
+        <title>Check Mate Go</title>
       </Helmet>
     <div>
      

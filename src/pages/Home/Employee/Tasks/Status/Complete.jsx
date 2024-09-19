@@ -2,7 +2,7 @@ import { BsThreeDots } from "react-icons/bs";
 import CompleteCard from "../CompleteCard";
 import { useState } from "react";
 
-const Complete = () => {
+const Complete = ({data}) => {
     const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
@@ -11,8 +11,10 @@ const Complete = () => {
       </h2>
       {
         isOpen && <div className="flex flex-col gap-5">
-        <CompleteCard />
-        <CompleteCard />
+    {
+      data?.map(item => <CompleteCard key={item?._id} item={item}/>)
+    }
+        
       </div>
       }
     </div>

@@ -16,6 +16,9 @@ import Profile from "../pages/Home/Employee/Profile/Profile";
 import Pricing from "../pages/Home/Common/Pricing";
 import Calender from "../pages/Home/Employee/Calender/Calender";
 import Uploaded from "../pages/Home/Employee/Photo/Uploaded";
+import SubscriptionForm from "../pages/Home/Employee/Payment/SubscriptionForm";
+import Success from "../pages/Home/Employee/Payment/Success";
+import Cancle from "../pages/Home/Employee/Payment/Cancle";
 
 export const router = createBrowserRouter([
   {
@@ -104,6 +107,9 @@ export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/verify/:email", element: <VerifyRoute /> },
+  { path: "/subscription/:id", element: <SubscriptionForm /> },
+  {path: '/success', element: <Success />},
+  {path: '/cancel', element: <Cancle />},
   {
     path: "/price",
     element: (

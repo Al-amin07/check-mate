@@ -1,18 +1,61 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TrailModal from "../Modals/TrailModal";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
+import useAuth from "../../../hooks/useAuth";
 
 const Pricing = () => {
   const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false)
-    const closeModal = () => {
-        setIsOpen(false)
+  const {
+    user,
+    userDetails: {
+      user: { subscription },
+    },
+  } = useAuth();
+  const { data: packages = [] } = useQuery({
+    queryKey: ["packages"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/packages`
+      );
+      console.log(data);
+      return data;
+    },
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  console.log(subscription);
+
+  const handleTrail = async () => {
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/trail/${user?.email}`
+      );
+      console.log(data);
+      if (data?.modifiedCount) {
+        toast.success("Your using 7 days free trails");
+        setIsOpen(false);
+      } else {
+        toast.error(data?.message);
+        setIsOpen(false);
+      }
+    } catch (error) {
+      toast.error(error?.message);
     }
-    useEffect(() => {
-        setTimeout(() => {
-            setIsOpen(true)
-        },1000)
-    },[])
+  };
+
+  useEffect(() => {
+    if (subscription?.status !== "paid") {
+      setTimeout(() => {
+        setIsOpen(true);
+      }, 1000);
+    }
+  }, []);
   return (
     <div className=" flex flex-col justify-center min-h-screen py-10">
       {/* Heading */}
@@ -31,89 +74,40 @@ const Pricing = () => {
       {/* Pricing Cards */}
       <div className="max-w-5xl  mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Getting Started */}
-        <div className="bg-white transition-transform duration-500 text-center hover:bg-[#f9f9f9] hover:-translate-y-10 py-8  rounded-3xl shadow-xl">
-          <h3 className="text-2xl  font-medium text-[#24402B]  ">
-            Getting Started
-          </h3>
-          <p className="text-xl text-[#24402B] font-medium mt-2">$10.00</p>
-          <p className="text-sm text-gray-500">Per serviced location/month</p>
-          <button className="mt-3 bg-[#487253] font-medium text-white py-2 px-4 rounded-md hover:bg-green-800">
-            Get started
-          </button>
+        {packages.map((item) => (
+          <div
+            key={item._id}
+            className="bg-white transition-transform duration-500 text-center hover:bg-[#f9f9f9] hover:shadow-xl py-8  rounded-3xl shadow-lg"
+          >
+            <h3 className="text-2xl  font-medium text-[#24402B] ">
+              {item?.name}
+            </h3>
+            <p className="text-xl text-[#24402B] font-medium mt-2">
+              $ {item?.price}
+            </p>
+            <p className="text-sm text-gray-500">Per serviced location/month</p>
+            <Link
+              to={`/subscription/${item?._id}`}
+              className="mt-3 bg-[#487253] font-medium text-white py-2 inline-block  px-4 rounded-md hover:bg-green-800"
+            >
+              Get started
+            </Link>
 
-          <ul className="mt-6 text-[#24402B]  px-8 text-left space-y-2 ">
-            <li className="font-[500]">✔ 20-50 Employees and Admin</li>
-            <li className="font-[500]">✔ Route Builders</li>
-            <li className="font-[500]">✔ 50 Photos per Visit</li>
-            <li className="font-[500]">✔ Upload Photos</li>
-            <li className="font-[500]">✔ Unlimited Admin</li>
-            <li className="font-[500]">✔ Unlimited Technicians</li>
-            <li className="font-[500]">✔ 20 Photos per Location</li>
-            <li className="font-[500]">✔ Customer Support Lite</li>
-          </ul>
-        </div>
+            <ul className="mt-6 text-[#24402B]  px-8 text-left space-y-2 ">
+              {item?.details?.map((lists, index) => (
+                <li key={index} className="font-[500]">
+                  ✔ {lists}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
 
-        {/* Scaling Up */}
-        <div className="bg-white transition-transform duration-500 hover:bg-[#f9f9f9] hover:-translate-y-10 text-center p-8  rounded-3xl shadow-xl">
-          <h3 className="text-2xl  font-medium text-[#24402B]  ">
-            Scalling Up
-          </h3>
-          <p className="text-xl text-[#24402B] font-medium mt-2">$20.00</p>
-          <p className="text-sm text-gray-500">Per serviced location/month</p>
-          <button className="mt-3 bg-[#487253] font-medium text-white py-2 px-4 rounded-md hover:bg-green-800">
-            Get started
-          </button>
-          <ul className="mt-6 text-left space-y-2 text-gray-700">
-            <li className="text-[#24402b] font-[500]">
-              ✔ Unlimited Technicians and Admin
-            </li>
-            <li className="text-[#24402b] font-[500]">✔ Route Builders</li>
-            <li className="text-[#24402b] font-[500]">✔ 50 Photos per Visit</li>
-            <li className="text-[#24402b] font-[500]">✔ Upload Photos</li>
-            <li className="text-[#24402b] font-[500]">✔ Unlimited Admin</li>
-            <li className="text-[#24402b] font-[500]">
-              ✔ Unlimited Technicians
-            </li>
-            <li className="text-[#24402b] font-[500]">
-              ✔ 20 Photos per Location
-            </li>
-            <li className="text-[#24402b] font-[500]">
-              ✔ Customer Support Lite
-            </li>
-            <li className="text-[#24402b] font-[500]">✔ Shopping Visit</li>
-          </ul>
-        </div>
-
-        {/* Home Program */}
-        <div className="bg-white hover:bg-[#f9f9f9] hover:-translate-y-10 transition-transform duration-500 p-8 text-center rounded-lg shadow-xl">
-          <h3 className="text-2xl  font-medium text-[#24402B]  ">
-            Home Program
-          </h3>
-          <p className="text-xl text-[#24402B] font-medium mt-2">$5.00</p>
-          <p className="text-sm text-gray-500">Per serviced location/month</p>
-          <button className="mt-3 bg-[#487253] font-medium text-white py-2 px-4 rounded-md hover:bg-green-800">
-            Get started
-          </button>
-          <ul className="mt-6 text-left space-y-2 text-gray-700">
-            <li className="text-[#24402B] font-[500]">
-              ✔ 11-20 Employees and Admin
-            </li>
-            <li className="text-[#24402B] font-[500]">✔ Route Builders</li>
-            <li className="text-[#24402B] font-[500]">✔ 50 Photos per Visit</li>
-            <li className="text-[#24402B] font-[500]">✔ Upload Photos</li>
-            <li className="text-[#24402B] font-[500]">✔ Unlimited Admin</li>
-            <li className="text-[#24402B] font-[500]">
-              ✔ Unlimited Technicians
-            </li>
-            <li className="text-[#24402B] font-[500]">
-              ✔ 20 Photos per Location
-            </li>
-            <li className="text-[#24402B] font-[500]">
-              ✔ Customer Support Lite
-            </li>
-          </ul>
-        </div>
-        <TrailModal closeModal={closeModal} isOpen={isOpen}/>
+        <TrailModal
+          handleData={handleTrail}
+          closeModal={closeModal}
+          isOpen={isOpen}
+        />
       </div>
       <Link
         onClick={() => {

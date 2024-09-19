@@ -7,18 +7,26 @@ import ProfessionalModal from "../../Modals/ProfessionalModal";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 const Profile = () => {
-  const {
-    user,
-    userDetails: { user: userDetails },
-    updateUserProfile,
-  } = useAuth();
+  const { user, updateUserProfile } = useAuth();
 
   const axiosSecure = useAxiosSecure();
-  const [profile, setProfile] = useState(userDetails);
+
   const [isEditPersonal, setIsEditPersonal] = useState(false);
   const [isEditProfessional, setIsEditProfessional] = useState(false);
-
+  const {
+    data: profile = {},
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["profile", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/profile/${user?.email}`);
+      console.log(data);
+      return data;
+    },
+  });
   const closeModal = () => {
     setIsEditPersonal(false);
   };
@@ -44,7 +52,7 @@ const Profile = () => {
       );
       if (data.modifiedCount) {
         toast.success("Profile Edited!!!");
-        setProfile({ ...profile, companyName, companySize, location });
+        refetch();
       }
       console.log();
     } catch (error) {
@@ -68,7 +76,7 @@ const Profile = () => {
       );
       if (data.modifiedCount) {
         toast.success("Profile Edited!!!");
-        setProfile({ ...profile, name, phone, address });
+        refetch();
         await updateUserProfile(name, user?.photoURL);
       }
       console.log();
@@ -78,6 +86,12 @@ const Profile = () => {
       setIsEditPersonal(false);
     }
   };
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex justify-center items-center ">
+        <p className="text-lg text-slate-500">Loading....</p>
+      </div>
+    );
   return (
     <div className=" p-6 md:p-8 lg:p-16 bg-white">
       {/* Personal Information Section */}
@@ -87,6 +101,7 @@ const Profile = () => {
         <div className=" flex lg:flex-row flex-col justify-between">
           <div className="flex flex-1 md:flex-row flex-col items-center gap-10 mb-4">
             <img
+              referrerPolicy="no-referrer"
               // src={user?.photoURL} // Add the actual image source here
               src={profile?.image} // Add the actual image source here
               alt="Profile"
@@ -141,7 +156,7 @@ const Profile = () => {
               <FaPencil size={18} /> Edit
             </button>
             <PersonalModal
-              userDetails={userDetails}
+              userDetails={profile}
               isOpen={isEditPersonal}
               handleData={handlePersonalData}
               closeModal={closeModal}
@@ -216,7 +231,7 @@ const Profile = () => {
                 isOpen={isEditProfessional}
                 closeModal={proCloseModal}
                 handleData={handleProfrssionalData}
-                userDetails={userDetails}
+                userDetails={profile}
               />
             </div>
           </div>
@@ -235,7 +250,7 @@ const Profile = () => {
               <input
                 type="text"
                 className="w-full px-5 py-[6px] border rounded-full"
-                value="Home Program"
+                value={profile?.subscription?.type}
                 disabled
               />
             </div>
@@ -246,28 +261,27 @@ const Profile = () => {
               <input
                 type="text"
                 className="w-full px-5 py-[6px] border rounded-full"
-                value="$5"
+                value={` $ ${profile?.subscription?.price}`}
                 disabled
               />
             </div>
+            {profile?.subscription?.benefits.length > 0 && (
+              <div className="mb-4 flex  gap-10">
+                <label className=" text-gray-700 font-medium whitespace-nowrap ">
+                  Package Details:
+                </label>
+                <ul className="list-none lists border space-y-2  p-5 bg-[#f9f9f9] rounded-md ">
+                  <li>
+                    <i className="fa fa-check"></i>Unlimited Technicians and
+                    Admin
+                  </li>
+                  {profile?.subscription?.benefits?.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-            <div className="mb-4 flex  gap-10">
-              <label className=" text-gray-700 font-medium whitespace-nowrap ">
-                Package Details:
-              </label>
-              <ul className="list-none lists border space-y-2  p-5 bg-[#f9f9f9] rounded-md ">
-                <li>
-                  <i className="fa fa-check"></i>Unlimited Technicians and Admin
-                </li>
-                <li>Route Builders</li>
-                <li>50 Photos per Visit</li>
-                <li>Upload Photos</li>
-                <li>Unlimited Admin</li>
-                <li>Unlimited Technicians</li>
-                <li>20 Photos per Location</li>
-                <li>Customer Support Lite</li>
-              </ul>
-            </div>
             <div className="mb-4 flex items-center gap-3">
               <label className=" text-gray-700 font-medium whitespace-nowrap ">
                 Subscription Status:
@@ -275,7 +289,7 @@ const Profile = () => {
               <input
                 type="text"
                 className="w-full px-5 py-[6px] border rounded-full"
-                value="Paid"
+                value={profile?.subscription?.status}
                 disabled
               />
             </div>

@@ -15,6 +15,7 @@ const Navbar = () => {
     logOut,
     userDetails: { totalNotification },
   } = useAuth();
+  console.log(user)
   const axiosSecure = useAxiosSecure();
   const [notification, setNotification] = useState(totalNotification);
 
@@ -63,7 +64,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <div className="avatar">
             <div className="w-12 rounded-full hover:scale-75 transition-all duration-500">
-              <img src={user?.photoURL} />
+              <img alt="user" referrerPolicy="no-referrer" src={user?.photoURL} />
             </div>
           </div>
 
@@ -91,7 +92,7 @@ const Navbar = () => {
             </div>
           </button>
           {isOpen && (
-            <div className="bg-white z-50 absolute top-24 right-10 shadow-2xl  shadow-slate-600 rounded-lg p-4 w-80">
+            <div className="bg-white z-50 absolute top-24 max-h-[550px] overflow-x-auto right-10 shadow-2xl  shadow-slate-600 rounded-lg p-4 w-80">
               <div className=" flex justify-between items-center">
                 <h3 className="font-semibold text-lg mb-4">
                   Recent Activities
@@ -103,17 +104,17 @@ const Navbar = () => {
                   Mark all read
                 </h3>
               </div>
-              <ul>
+              <ul className="space-y-3">
                 {notification && notification?.length > 0
-                  ? notification?.map((activity, index) => (
+                  ? notification?.slice(0,7)?.map((activity, index) => (
                       <li
                         key={index}
-                        className="flex cursor-pointer relative rounded-md hover:shadow-lg gap-4 mb-3 px-2 py-4"
+                        className="flex cursor-pointer bg-[#f9f9f9] relative rounded-md hover:shadow-lg gap-4 mb-3 px-2 py-4"
                       >
                         <div
-                          className={` text-white bgc p-2 w-10 h-10 rounded-full `}
+                          className={` text-white relative bgc p-1 w-10 h-10 rounded-full `}
                         >
-                          <FaFlag className="" size={18} />
+                          <FaFlag className=" absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" size={18} />
                         </div>
                         {/* Activity details */}
                         <div>
@@ -124,11 +125,11 @@ const Navbar = () => {
                             {activity?.action}
                           </p>
                           <p className="text-xs mt-2 text-gray-500">
-                            {activity?.time}
+                            {new Date(activity?.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </div>
                         {activity?.isRead === false && (
-                          <div className="bg-red-500 absolute top-4 right-4 h-2 w-2 rounded-full"></div>
+                          <div className="bg-red-500 absolute top-3 right-3 h-2 w-2 rounded-full"></div>
                         )}
                       </li>
                     ))

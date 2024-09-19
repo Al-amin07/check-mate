@@ -1,25 +1,61 @@
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Title from "../../Common/Title";
 import UserTable from "./UserTable";
-
+import { useQuery } from "@tanstack/react-query";
 
 const User = () => {
-  const users = [
-    { id: 1, name: 'John D', email: 'john@gmail.com', status: 'Paid', statusColor: 'green' },
-    { id: 2, name: 'Yasin Ali', email: 'yasin@gmail.com', status: 'Unpaid', statusColor: 'red' },
-    { id: 3, name: 'Khalid', email: 'khalid@gmail.com', status: 'Paid', statusColor: 'green' },
-  ];
-
-  const sections = ['Getting Started', 'Scaling Up', 'Home Program'];
-
+  const axiosSecure = useAxiosSecure();
+  const {
+    data: totalUsers = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/all-user");
+      console.log(data);
+      return data;
+    },
+  });
+  console.log(
+    totalUsers?.filter((item) => item?.subscription?.type === "Getting Started")
+  );
+  console.log(
+    totalUsers?.filter((item) => item?.subscription?.type === "Getting Started")
+  );
+  console.log(
+    totalUsers?.filter((item) => item?.subscription?.type === "Home Program")
+  );
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <p className="text-lg text-slate-600">Loading....</p>
+      </div>
+    );
   return (
     <div className="p-4 lg:p-8">
-     <Title title={'List of Users'}/>
+      <Title title={"List of Users"} />
       <div className="space-y-12">
-      <UserTable title={'Getting Started'}/>
-      <UserTable title={'Scaling Up'}/>
-      <UserTable title={'Home Program'}/>
+        <UserTable
+          refetch={refetch}
+          users={totalUsers}
+          title={"Getting Started"}
+        />
+        {/* <UserTable
+          users={totalUsers?.filter(
+            (item) => item?.subscription?.type === "Getting Started"
+          )}
+          title={"Scaling Up"}
+        /> */}
+        <UserTable refetch={refetch} users={totalUsers} title={"Scaling Up"} />
+        <UserTable
+          refetch={refetch}
+          users={totalUsers?.filter(
+            (item) => item?.subscription?.type === "Home Program"
+          )}
+          title={"Home Program"}
+        />
       </div>
-     
     </div>
   );
 };

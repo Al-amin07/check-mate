@@ -49,16 +49,26 @@ const CameraCapture = ({ setImageUrl }) => {
     <div>
       <div>
         <video ref={videoRef} autoPlay style={{ width: "300px" }} />
-        <button onClick={startCamera}>Start Cameraa</button>
-        <button onClick={takePhoto}>Take Photo</button>
+        <button
+          onClick={startCamera}
+          className="bgc text-white py-2 px-4  rounded-xl text-xs"
+        >
+          Start Cameraa
+        </button>
+        <button
+          onClick={takePhoto}
+          className="bgc text-white py-2 ml-2 px-4  rounded-xl text-xs"
+        >
+          Take Photo
+        </button>
       </div>
 
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {photo && (
-        <div>
-          <h3>Captured Photo:</h3>
-          <img src={photo} alt="Captured" />
+        <div className="mt-3">
+          <h3 className="text-slate-600 font-medium mb-2">Captured Photo:</h3>
+          <img className="h-24 w-24" src={photo} alt="Captured" />
         </div>
       )}
 

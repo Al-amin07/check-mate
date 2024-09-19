@@ -10,7 +10,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const TrailModal = ({ closeModal, isOpen, handleData }) => {
+const FirstModal = ({ closeModal, isOpen }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -39,21 +39,17 @@ const TrailModal = ({ closeModal, isOpen, handleData }) => {
             >
               <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-xl bg-white px-10 py-16 text-center  align-middle shadow-xl transition-all">
                 <h2 className="text-[#24402B] font-bold mb-3 text-4xl">
-                  Start 7 days Free Trail
+                  Your Free 7 days Trail Ends
                 </h2>
 
-                <p className="text-xl text-[#24402B] font-semibold">
-                  Try first and decide later, no credit card required
-                </p>
-
                 <div className="flex justify-center ">
-                  <button
-                    onClick={handleData}
-                    type="submit"
+                  <Link
+                    to={"/price"}
+                    
                     className="bg-gradient-to-r from-[#4F7D5B] to-green-900 flex items-center gap-1 mt-5 text-white px-6 py-1 rounded-full hover:from-green-800 hover:to-green-950 focus:outline-none text-xl"
                   >
-                    Start Trail <FaArrowRightLong size={28} />
-                  </button>
+                    Update Plan <FaArrowRightLong size={28} />
+                  </Link>
                   {/* <Link
                     to={'/subscription'}
                       type="submit"
@@ -77,10 +73,10 @@ const TrailModal = ({ closeModal, isOpen, handleData }) => {
   );
 };
 
-TrailModal.propTypes = {
+FirstModal.propTypes = {
   closeModal: PropTypes.func,
   handleData: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default TrailModal;
+export default FirstModal;

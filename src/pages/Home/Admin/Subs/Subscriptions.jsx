@@ -9,29 +9,29 @@ import BarChartGraph from "./BarChart";
 import { LuPlus } from "react-icons/lu";
 import PackageMOdal from "../../Modals/PackageModal";
 import AllSubs from "./AllSubs";
-import useAuth from "../../../../hooks/useAuth";
+
 
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import Card from "./Card";
 
 const Subscriptions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const {
-    userDetails: { totalSubscribers, totalPackages },
-  } = useAuth();
+
+  const { data: subscriptions = {}, refetch } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/subscription-data");
+      console.log(data);
+      return data;
+    },
+  });
   const [isChange, setIsChange] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
-  
-
-  const packages = [
-    { name: "Total", count: 10, amount: "$100" },
-    { name: "Getting Started", count: 4, amount: "$50" },
-    { name: "Scaling Up", count: 3, amount: "$25" },
-    { name: "Home Program", count: 3, amount: "$25" },
-  ];
 
   const handleData = async (e) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ const Subscriptions = () => {
       console.log(data);
       if (data.insertedId) {
         toast.success("Package Added!!!");
-        totalPackages.push(packageDetails);
+        refetch();
       }
     } catch (error) {
       toast.error(error?.message);
@@ -61,6 +61,67 @@ const Subscriptions = () => {
     }
   };
 
+  // const packages = [
+  //   {
+  //     name: "Total",
+  //     count: subscriptions?.totalSubscribers?.length,
+  //     amount: subscriptions?.totalSubscribers?.reduce(
+  //       (sum, item) => sum + parseFloat(item?.subscriptionDetails?.price),
+  //       0
+  //     ),
+  //   },
+  //   {
+  //     name: "Getting Started",
+  //     count: subscriptions?.totalSubscribers?.filter(
+  //       (item) => item?.subscriptionDetails?.name === "Getting Started"
+  //     )?.length,
+  //     amount: subscriptions?.totalSubscribers
+  //       ?.filter(
+  //         (item) => item?.subscriptionDetails?.name === "Getting Started"
+  //       )
+  //       ?.reduce(
+  //         (sum, item) => sum + parseFloat(item?.subscriptionDetails?.price),
+  //         0
+  //       ),
+  //   },
+  // ];
+  const totalCount = subscriptions?.totalSubscribers?.length;
+  const totalGetCount = subscriptions?.totalSubscribers?.filter(
+    (item) => item?.subscriptionDetails?.plan === "Getting Started"
+  )?.length;
+  const totalScalCount = subscriptions?.totalSubscribers?.filter(
+    (item) => item?.subscriptionDetails?.plan === "Scaling Up"
+  )?.length;
+  const totalHomeCount = subscriptions?.totalSubscribers?.filter(
+    (item) => item?.subscriptionDetails?.plan === "Home Program"
+  )?.length;
+
+  console.log(totalGetCount, totalScalCount);
+  const totalAmount = subscriptions?.totalSubscribers?.reduce(
+    (sum, item) => sum + parseInt(item?.subscriptionDetails?.price),
+    0
+  );
+  const totlaGetAmount = subscriptions?.totalSubscribers
+    ?.filter((item) => item?.subscriptionDetails?.plan === "Getting Started")
+    ?.reduce(
+      (sum, item) => sum + parseInt(item?.subscriptionDetails?.price),
+      0
+    );
+  console.log(totlaGetAmount);
+  const totlaScalAmount = subscriptions?.totalSubscribers
+    ?.filter((item) => item?.subscriptionDetails?.plan === "Scaling Up")
+    ?.reduce(
+      (sum, item) => sum + parseInt(item?.subscriptionDetails?.price),
+      0
+    );
+  console.log(totlaGetAmount);
+  const totlaHomeAmount = subscriptions?.totalSubscribers
+    ?.filter((item) => item?.subscriptionDetails?.plan === "Home Program")
+    ?.reduce(
+      (sum, item) => sum + parseInt(item?.subscriptionDetails?.price),
+      0
+    );
+  console.log(totlaGetAmount);
   return (
     <div className="max-w-6xl bg-white mx-auto p-6">
       {/* Package Summary Cards */}
@@ -86,15 +147,22 @@ const Subscriptions = () => {
       {!isChange && (
         <div className={``}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-6">
-            {packages.map((pkg, index) => (
-              <div key={index} className="bgc text-white px-8 py-6 rounded-3xl">
-                <div className="flex justify-between items-center">
-                  <div className="text-lg ">{pkg.name}</div>
-                  <div className="text-lg">{pkg.count}</div>
-                </div>
-                <div className="text-2xl font-bold">{pkg.amount}</div>
-              </div>
-            ))}
+            <Card count={totalCount} amount={totalAmount} name={"Total"} />
+            <Card
+              count={totalGetCount}
+              amount={totlaGetAmount}
+              name={"Getting Started"}
+            />
+            <Card
+              count={totalScalCount}
+              amount={totlaScalAmount}
+              name={"Scaling Up"}
+            />
+            <Card
+              count={totalHomeCount}
+              amount={totlaHomeAmount}
+              name={"Home Program"}
+            />
           </div>
 
           {/* Total Subscriptions Chart */}
@@ -156,7 +224,7 @@ const Subscriptions = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {totalSubscribers?.map((user, index) => (
+                  {subscriptions?.totalSubscribers?.map((user, index) => (
                     <tr key={user.id} className="text-center border-t">
                       <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
                         {index + 1}
@@ -213,7 +281,9 @@ const Subscriptions = () => {
           </div>
         </div>
       )}
-      {isChange && <AllSubs packages={totalPackages} />}
+      {isChange && (
+        <AllSubs refetch={refetch} packages={subscriptions?.totalPackages} />
+      )}
     </div>
   );
 };

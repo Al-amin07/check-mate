@@ -12,11 +12,11 @@ const AdminHome = () => {
   const {
     userDetails: { totalSubscribers, totalTasks, totalUsers },
     adminLoading,
-    userDetails
+    userDetails,
   } = useAuth();
-  console.log(userDetails)
+
   const totalAmount = totalSubscribers?.reduce(
-    (sum, item) => item?.subscriptionDetails?.price + sum,
+    (sum, item) => parseFloat(item?.subscriptionDetails?.price) + sum,
     0
   );
   // if(adminLoading) return <p>Loading...</p>

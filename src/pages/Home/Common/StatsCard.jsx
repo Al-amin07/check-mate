@@ -6,7 +6,7 @@ const StatsCard = ({ title, count, icon: Icon }) => {
          <Icon className="md:h-16 h-12 w-12 md:w-16" />
         </div>
         <h4 className="text-lg">{title}</h4>
-        <p className="text-xl md:text-2xl font-medium">{count}</p>
+        <p className="text-xl md:text-2xl font-medium">{title === 'Total Amounts' ? `$ ${count}` : count}</p>
       </div>
     );
   };
