@@ -39,7 +39,7 @@ const Sidebar = () => {
 
         <button
           onClick={handleToggle}
-          className=" z-50 absolute inline-block  lg:hidden top-3 left-4 p-4 focus:outline-none hover:bg-gray-300 hover:scale-105 transition-all duration-500 focus:bg-[#f9f9f9]"
+          className=" z-50 absolute inline-block  lg:hidden top-3 left-4 p-4 focus:outline-none   hover:bg-gray-300 hover:scale-105 transition-all duration-500 focus:bg-[#f9f9f9]"
         >
           {!isActive ? (
             <RxCross1 className="h-6 w-6" />
@@ -51,7 +51,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed shadow-2xl lg:shadow-none   flex flex-col justify-between overflow-x-hidden bg-[#f9f9f9] w-[230px] space-y-2  pl-2 pr-2 lg:pr-0 lg:pl-4 py-4 absolute inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed shadow-2xl bg-black  lg:shadow-none   flex flex-col justify-between overflow-x-hidden  w-[270px] space-y-2  pl-2 pr-2  py-4 absolute inset-y-0 left-0 transform ${
           isActive && "-translate-x-full"
         }  lg:translate-x-0  transition duration-200 ease-in-out`}
       >
@@ -67,29 +67,27 @@ const Sidebar = () => {
           </div>
 
           {/* Nav Items */}
-          <div className="flex  flex-col bg-[#f9f9f9] justify-between  flex-1 mt-[42px] lg:mt-6">
+          <div className="flex  flex-col  justify-between  flex-1 mt-[42px] lg:mt-6">
             {/* Conditional toggle button here.. */}
 
             {/*  Menu Items */}
             <nav>
               {/* Statistics */}
-              {roleLoading && (
-                <p className="text-lg text-center">Loading...</p>
-              )}
-              {(role === "admin" && !roleLoading) && <AdminSidebar />}
-              {(role === "employee" && !roleLoading) && <EmployeeSidebar />}
+              {roleLoading && <p className="text-lg text-center">Loading...</p>}
+              {role === "admin" && !roleLoading && <AdminSidebar />}
+              {role === "employee" && !roleLoading && <EmployeeSidebar />}
             </nav>
           </div>
         </div>
 
-        <div>
+        <div className=" px-4">
           <button
             onClick={logOut}
-            className="flex w-full items-center gap-0 rounded-md  px-2 py-2  text-red-600 bg-white border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-500 transform"
+            className="flex w-full items-center gap-2 text-white rounded-md  p-2  bg-red-600   hover:bg-red-800  transition-colors duration-500 transform"
           >
             <GrLogout className="w-6 h-6" />
 
-            <span className="mx-4 font-medium">Logout</span>
+            <span className="mr-4 font-medium">Logout</span>
           </button>
         </div>
       </div>

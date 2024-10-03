@@ -7,7 +7,8 @@ import TaskTable from "./Tables/TaskTabel";
 import PieChartPlaceholder from "./PieChartPlaceholder";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-
+import img1 from "../../../assets/one.png";
+import img2 from "../../../assets/two.png";
 const AdminHome = () => {
   const {
     userDetails: { totalSubscribers, totalTasks, totalUsers },
@@ -24,21 +25,25 @@ const AdminHome = () => {
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <StatsCard
+          img={img1}
           icon={LuTag}
           title="Total Subscribers"
           count={totalSubscribers?.length}
         />
         <StatsCard
+          img={img2}
           icon={HiUsers}
           title="Total Users"
           count={totalUsers?.length}
         />
         <StatsCard
+          img={img1}
           icon={IoMdCheckmarkCircleOutline}
           title="Total Tasks"
           count={totalTasks?.length}
         />
         <StatsCard
+        img={img2}
           icon={RiExchangeDollarLine}
           title="Total Amounts"
           count={totalAmount}

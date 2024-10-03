@@ -1,12 +1,12 @@
-import  { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import 'leaflet-routing-machine';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import './LiveLocationMap.css'; // Import the CSS file for fullscreen styles
+import { useState, useEffect } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "leaflet-routing-machine";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import "./LiveLocationMap.css"; // Import the CSS file for fullscreen styles
 
 // Fix for missing default icon issue in Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -20,19 +20,21 @@ L.Icon.Default.mergeOptions({
 const getGeocode = async (address) => {
   try {
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        address
+      )}`
     );
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     if (data && data.length > 0) {
       return {
         lat: parseFloat(data[0].lat),
         lon: parseFloat(data[0].lon),
       };
     }
-    throw new Error('Location not found');
+    throw new Error("Location not found");
   } catch (error) {
-    console.error('Error during geocoding:', error);
+    console.error("Error during geocoding:", error);
     return null;
   }
 };
@@ -50,7 +52,7 @@ const RoutingMachine = ({ currentPosition, destinationPosition }) => {
         ],
         routeWhileDragging: true,
         lineOptions: {
-          styles: [{ color: 'blue', weight: 4 }],
+          styles: [{ color: "blue", weight: 4 }],
         },
         show: true,
         // addWaypoints: false,
@@ -63,29 +65,28 @@ const RoutingMachine = ({ currentPosition, destinationPosition }) => {
   return null;
 };
 
-const DirectionMap = ({address}) => {
-    console.log(address)
+const DirectionMap = ({ address: destinationPosition }) => {
   const [currentPosition, setCurrentPosition] = useState(null);
-//   const [destinationAddress, setDestinationAddress] = useState('');
-  const [destinationPosition, setDestinationPosition] = useState(null);
-  const [loading, setLoading] = useState(false);
+  //   const [destinationAddress, setDestinationAddress] = useState('');
+  // const [destinationPosition, setDestinationPosition] = useState(null);
+  // const [loading, setLoading] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false); // State to manage full-screen toggle
-    useEffect(() => {
-        if(address){
-            setDestination(address)
-        }
-    }, [address])
-    console.log(address)
-    const setDestination = async (address) => {
-        setLoading(true);
-        const destinationCoords = await getGeocode(address);
-        if (destinationCoords) {
-          setDestinationPosition(destinationCoords);
-        } else {
-          alert('Location not found!');
-        }
-        setLoading(false);
-    }
+  // useEffect(() => {
+  //     if(address){
+  //         setDestination(address)
+  //     }
+  // }, [address])
+  // console.log(address)
+  // const setDestination = async (address) => {
+  //     setLoading(true);
+  //     const destinationCoords = await getGeocode(address);
+  //     if (destinationCoords) {
+  //       setDestinationPosition(destinationCoords);
+  //     } else {
+  //       alert('Location not found!');
+  //     }
+  //     setLoading(false);
+  // }
   // Get the user's current location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -93,25 +94,29 @@ const DirectionMap = ({address}) => {
         const { latitude, longitude } = pos.coords;
         setCurrentPosition({ lat: latitude, lon: longitude });
       },
-      (err) => console.error('Error fetching location:', err)
+      (err) => console.error("Error fetching location:", err)
     );
   }, []);
 
-
+  // console.log(currentPosition)
 
   const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen); 
+    setIsFullScreen(!isFullScreen);
   };
-console.log(currentPosition, destinationPosition)
+  console.log(currentPosition, destinationPosition);
   return (
     <div>
-  
-
-      <div className={isFullScreen ? 'map-container full-screen' : 'map-container'}>
+      <div
+        className={isFullScreen ? "map-container full-screen" : "map-container"}
+      >
         <MapContainer
-          center={currentPosition ? [currentPosition.lat, currentPosition.lon] : [51.505, -0.09]}
+          center={
+            currentPosition
+              ? [currentPosition.lat, currentPosition.lon]
+              : [51.505, -0.09]
+          }
           zoom={13}
-          style={{ height: '50%', width: '100%' }}
+          style={{ height: "100%", width: "100%" }}
           onClick={toggleFullScreen} // Toggle full screen on click
         >
           <TileLayer
@@ -119,13 +124,16 @@ console.log(currentPosition, destinationPosition)
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {currentPosition && destinationPosition && (
-            <RoutingMachine currentPosition={currentPosition} destinationPosition={destinationPosition} />
+            <RoutingMachine
+              currentPosition={currentPosition}
+              destinationPosition={destinationPosition}
+            />
           )}
         </MapContainer>
 
         {/* Button to toggle full screen */}
         <button onClick={toggleFullScreen} className="fullscreen-button">
-          {isFullScreen ? 'Exit Full Screen' : 'Full Screen'}
+          {isFullScreen ? "Exit Full Screen" : "Full Screen"}
         </button>
       </div>
     </div>

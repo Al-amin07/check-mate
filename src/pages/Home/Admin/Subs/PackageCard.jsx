@@ -51,7 +51,6 @@ const PackageCard = ({ item, index, refetch }) => {
     }
   };
   const handleDelete = async () => {
-    
     try {
       const { data } = await axiosSecure.delete(`/subscription/${item?._id}`);
       console.log(data);
@@ -61,7 +60,7 @@ const PackageCard = ({ item, index, refetch }) => {
       }
     } catch (error) {
       toast.error(error?.message);
-    } 
+    }
   };
   return (
     <div className="">
@@ -70,14 +69,13 @@ const PackageCard = ({ item, index, refetch }) => {
           Package {index + 1}
         </button>
         <div className="flex gap-4 items-center">
-          {index > 2 && (
-            <button
-              onClick={() => setIsDeleteOpen(true)}
-              className="text-green-600 bg-slate-200/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
-            >
-              <RiDeleteBinLine size={18} /> Delete
-            </button>
-          )}
+          <button
+            onClick={() => setIsDeleteOpen(true)}
+            className="text-green-600 bg-slate-200/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
+          >
+            <RiDeleteBinLine size={18} /> Delete
+          </button>
+
           <button
             onClick={() => setIsOpen(true)}
             className="text-green-600 bg-slate-200/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"

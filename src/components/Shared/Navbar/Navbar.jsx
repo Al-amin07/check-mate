@@ -8,6 +8,8 @@ import { FaFlag } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { MdNotificationsActive } from "react-icons/md";
+import { TiMessages } from "react-icons/ti";
 
 const Navbar = () => {
   const {
@@ -15,7 +17,7 @@ const Navbar = () => {
     logOut,
     userDetails: { totalNotification },
   } = useAuth();
-  console.log(user)
+  console.log(user);
   const axiosSecure = useAxiosSecure();
   const [notification, setNotification] = useState(totalNotification);
 
@@ -51,7 +53,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-[#f9f9f9] py-4">
+    <div className="bg-[#E4F5EC] z-50 py-4">
       <div className="flex max-w-7xl mx-auto  justify-between items-center ">
         <div className=" hover:scale-105 transition-all duration-300">
           <Link
@@ -61,30 +63,37 @@ const Navbar = () => {
             CheckMateGo
           </Link>
         </div>
+        <div className="hidden lg:block">
+          <h2 className="ml-28 text-2xl font-bold">Welcome Back ,  {user?.displayName}  👋</h2>
+        </div>
         <div className="flex items-center gap-5">
-          <div className="avatar">
-            <div className="w-12 rounded-full hover:scale-75 transition-all duration-500">
-              <img alt="user" referrerPolicy="no-referrer" src={user?.photoURL} />
-            </div>
-          </div>
+          <label  className="input hidden  md:flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-6 w-6 opacity-70"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <input type="text" className="grow" placeholder="Search..." />
+          </label>
+          <div className="h-12 hidden md:block w-[2px] bg-slate-700">
 
+          </div>
+          <TiMessages className="text-green-500" size={32} />
           <button className="btn btn-ghost btn-circle">
             <div className="indicator   relative">
-              <svg
+              <MdNotificationsActive
+                className=" text-green-500"
+                size={38}
                 onClick={() => setIsOpen(!isOpen)}
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
+              />
+
               {notification?.filter((item) => item?.isRead === false)?.length >
               0 ? (
                 <span className="badge badge-xs absolute top-2 right-2  badge-error indicator-item"></span>
@@ -106,30 +115,44 @@ const Navbar = () => {
               </div>
               <ul className="space-y-3">
                 {notification && notification?.length > 0
-                  ? notification?.slice(0,7)?.map((activity, index) => (
+                  ? notification?.map((activity, index) => (
                       <li
                         key={index}
-                        className="flex cursor-pointer bg-[#f9f9f9] relative rounded-md hover:shadow-lg gap-4 mb-3 px-2 py-4"
+                        className="flex   cursor-pointer bg-[#f9f9f9] relative rounded-md hover:shadow-lg gap-4 mb-3 px-2 py-4"
                       >
                         <div
-                          className={` text-white relative bgc p-1 w-10 h-10 rounded-full `}
+                          className={` text-white w-10 bgc h-10 flex items-center justify-center   rounded-full `}
                         >
-                          <FaFlag className=" absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" size={18} />
+                          <FaFlag className=" " size={18} />
+                          {/* <FaFlag className=" absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" size={18} /> */}
                         </div>
                         {/* Activity details */}
-                        <div>
-                          <p className="text-sm">
+                        <div className="flex-1">
+                          <p className="text-sm ">
                             <span className="font-medium">
                               {activity?.message}
                             </span>{" "}
                             {activity?.action}
                           </p>
                           <p className="text-xs mt-2 text-gray-500">
-                            {new Date(activity?.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                            {new Date(activity?.createdAt).getDate()}
+                            {new Date(activity?.createdAt).toLocaleString(
+                              "en-US",
+                              { month: "short" }
+                            )}{" "}
+                            {new Date(activity?.createdAt).toLocaleTimeString(
+                              "en-US",
+                              {
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: true,
+                              }
+                            )}
+                            {/* {new Date(activity?.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} */}
                           </p>
                         </div>
                         {activity?.isRead === false && (
-                          <div className="bg-red-500 absolute top-3 right-3 h-2 w-2 rounded-full"></div>
+                          <div className="bg-red-500 absolute top-1 right-3 h-2 w-2 rounded-full"></div>
                         )}
                       </li>
                     ))
@@ -137,10 +160,26 @@ const Navbar = () => {
               </ul>
             </div>
           )}
+
+          <div className="flex items-center gap-2">
+            <div className="avatar ">
+              <div className="w-12 rounded-full hover:scale-75 transition-all duration-500">
+                <img
+                  alt="user"
+                  referrerPolicy="no-referrer"
+                  src={user?.photoURL}
+                />
+              </div>
+            </div>
+            <div>
+              <h2 className="font-bold ">{user?.displayName}</h2>
+              <p className="text-sm">Admin</p>
+            </div>
+          </div>
           <MdLogout
             onClick={handleLogOut}
             size={30}
-            className="text-red-600 hover:scale-110 transition-all"
+            className="text-red-600 mr-2 md:mr-1 hover:scale-110 transition-all"
           />
         </div>
       </div>

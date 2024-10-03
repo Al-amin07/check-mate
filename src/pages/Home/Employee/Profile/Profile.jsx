@@ -265,7 +265,7 @@ const Profile = () => {
                 disabled
               />
             </div>
-            {profile?.subscription?.benefits.length > 0 && (
+            {profile?.subscription?.benefits?.length > 0 && (
               <div className="mb-4 flex  gap-10">
                 <label className=" text-gray-700 font-medium whitespace-nowrap ">
                   Package Details:

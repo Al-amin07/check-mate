@@ -2,21 +2,21 @@ import { GrCaretNext } from "react-icons/gr";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { GrCaretPrevious } from "react-icons/gr";
-import { startTransition, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 const TaskTable = ({ data }) => {
   const [itemPerPage, setItemPerPage] = useState(5);
   const totalItem = data?.length;
   const [start, setStart] = useState(1);
   const totalPage = Math.ceil(totalItem / itemPerPage);
-  console.log(data);
+  
   const startData = (start - 1) * itemPerPage;
-  const endData = start * itemPerPage ;
+  const endData = start * itemPerPage;
   const newData = data.slice(startData, endData);
   return (
     <div className="bg-white rounded-lg shadow-lg w-full overflow-auto">
       <table className="min-w-full table-auto  custom-table  border-spacing-y-2">
-        <thead className="bgc text-white">
+        <thead className="bg-green-500 text-white">
           <tr>
             <th className=" border-r  text-sm md:text-base  font-normal py-2 md:py-3">
               Sl
@@ -39,10 +39,10 @@ const TaskTable = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {newData?.map((task, index) => (
+          {newData?.map((task) => (
             <tr key={task._id} className="text-center border-t ">
               <td className=" border-r text-sm whitespace-nowrap  border-b border-slate-400 text-green-800 bg-[#f9f9f9] ">
-                {data?.findIndex(item => item?._id === task?._id) + 1}
+                {data?.findIndex((item) => item?._id === task?._id) + 1}
               </td>
               <td className=" border-r text-sm border-b whitespace-nowrap border-slate-400 text-green-800 bg-[#f9f9f9] ">
                 {task?.task_Name}
@@ -73,7 +73,7 @@ const TaskTable = ({ data }) => {
           ))}
         </tbody>
       </table>
-      <div className="bg-[#5A8C67] py-[1px] w-auto flex justify-end gap-8 pr-8">
+      <div className="bg-green-500 py-[1px] w-auto flex justify-end gap-8 pr-8">
         <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
           <h3>Task per page</h3>
           <select
@@ -81,7 +81,7 @@ const TaskTable = ({ data }) => {
               setStart(1);
               setItemPerPage(e.target.value);
             }}
-            className=" ml-1 bgc text-white"
+            className=" ml-1 bg-green-500 text-white"
           >
             <option className="bg-white text-black" value="5">
               5

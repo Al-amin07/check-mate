@@ -1,14 +1,18 @@
-
-const StatsCard = ({ title, count, icon: Icon }) => {
-    return (
-      <div className="bg-[#487f56] text-white  px-5 py-3 md:py-3 lg:py-4 rounded-3xl flex flex-col  justify-center gap-1">
-        <div className="mb-2">
-         <Icon className="md:h-16 h-12 w-12 md:w-16" />
-        </div>
-        <h4 className="text-lg">{title}</h4>
-        <p className="text-xl md:text-2xl font-medium">{title === 'Total Amounts' ? `$ ${count}` : count}</p>
+const StatsCard = ({ title, count, icon: Icon, img }) => {
+  return (
+    <div className=" shadow-xl text-white rounded-3xl flex flex-col  justify-center gap-1">
+      <div className=" flex justify-center rounded-t-2xl bg-[#79DA9D] ">
+        {/* <Icon className="md:h-16 h-12 w-12 md:w-16" /> */}
+        <img src={img} />
       </div>
-    );
-  };
-  
-  export default StatsCard;
+      <div className=" p-4">
+      <p className="text-3xl text-green-500  font-medium ">
+        {title === "Total Amounts" ? `$ ${count}` : count}
+      </p>
+      <h4 className="text-lg text-black">{title}</h4>
+      </div>
+    </div>
+  );
+};
+
+export default StatsCard;
