@@ -1,20 +1,21 @@
 import cl from "../../assets/cl5.svg";
-import logo from "../../assets/logos.png";
+import logo from "../../assets/logoss.svg";
 import { FaFacebook } from "react-icons/fa6";
 import { FaXbox } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLocationPin } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const FooterHome = () => {
   return (
-    <footer className="bg-white relative">
+    <footer className=" mt-20 relative">
       <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <div className="text-teal-600">
-              <img src={logo} className="" alt="Logo" />
+              <Link  to={'/'}><img  src={logo} className="w-[250px]" alt="Logo" /></Link>
             </div>
 
             <p className="mt-4 max-w-xs text-gray-500">

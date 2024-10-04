@@ -115,7 +115,7 @@ const Feature = () => {
           </div>
         </div>
       </div>
-      <img className="absolute bottom-0 h-[450px] " src={logo1} alt="" />
+      <img className="absolute bottom-0 h-[350px] md:h-[400px] lg:h-[450px] " src={logo1} alt="" />
     </section>
   );
 };
