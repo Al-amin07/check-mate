@@ -41,12 +41,7 @@ const User = () => {
           users={totalUsers}
           title={"Getting Started"}
         />
-        {/* <UserTable
-          users={totalUsers?.filter(
-            (item) => item?.subscription?.type === "Getting Started"
-          )}
-          title={"Scaling Up"}
-        /> */}
+     
         <UserTable refetch={refetch} users={totalUsers} title={"Scaling Up"} />
         <UserTable
           refetch={refetch}

@@ -8,7 +8,7 @@ import { ImSpinner9 } from "react-icons/im";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import bg from "../../assets/bg.png";
-import logo from "../../assets/logos.png";
+import logo from "../../assets/logoss.svg";
 
 const Login = () => {
   const { signIn, signInWithGoogle, saveUser } = useAuth();
@@ -51,10 +51,10 @@ const Login = () => {
   return (
     <div className="min-h-screen relative w-full flex justify-center items-center">
       <div className="bg-white z-30  p-8 mx-auto mt-12 rounded-lg  max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center mb-4 text-green-800">
+        <h2 className="text-3xl font-bold text-center mb-4 text-slate-800">
           Login
         </h2>
-        <p className="text-green-700 text-center mb-8">
+        <p className="text-slate-800 text-center mb-8">
           Enter your credentials to access your account
         </p>
         <form onSubmit={handleLogin}>
@@ -63,7 +63,7 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-slate-50 text-gray-900"
             />
           </div>
           <div className=" relative ">
@@ -71,7 +71,7 @@ const Login = () => {
               type={isOpen ? "text" : "password"}
               name="password"
               placeholder="Password"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-slate-50 text-gray-900"
             />
 
             {isOpen ? (
@@ -88,22 +88,22 @@ const Login = () => {
               />
             )}
           </div>
-          <div className="mb-6 pl-2">
+          <div className="mb-6 mt-1 pl-2">
             <Link
               to={"/reset"}
               // onClick={handleFormgetPassword}
-              className="text-sm text-blue-500 hover:underline"
+              className="text-xs text-blue-500 hover:underline"
             >
-              Forgotten password?
+              Forgotten password?<span className="font-bold ml-1 text-sm text-slate-800">Reset</span>
             </Link>
           </div>
           <button
             disabled={loading}
             type="submit"
-            className="w-full disabled:from-green-900 disabled:to-green-950 text-white font-bold py-2 px-4 rounded-full bg-gradient-to-r from-[#4f7c5b] to-[#2e4f37] hover:from-green-800 hover:to-green-900"
+            className="w-full text-white font-bold py-2 px-4 rounded-full bg-green-500 hover:bg-green-600 disabled:bg-green-700"
           >
             {loading ? (
-              <ImSpinner9 size={22} className=" animate-spin m-auto" />
+              <ImSpinner9 size={24} className=" animate-spin m-auto" />
             ) : (
               "Log In"
             )}
@@ -114,7 +114,7 @@ const Login = () => {
             Don&apos;t have account?{" "}
             <Link
               to={"/signup"}
-              className="text-green-800 font-bold hover:underline"
+              className="text-salte-800  font-bold hover:underline"
             >
               Sign Up
             </Link>
@@ -126,25 +126,23 @@ const Login = () => {
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="flex flex-col gap-3 mt-4">
-          <button className="flex gap-2 font-semibold border border-green-800 items-center justify-center   text-green-800 rounded-full  py-1 hover:scale-105 transition-transform duration-700 ">
+          <button className="flex gap-2 font-semibold border border-green-500 items-center justify-center   text-slate-800 rounded-full  py-1 hover:scale-105 transition-transform duration-500 ">
             <img src={fb} className="h-7 w-7" alt="Facebook" />
             Login with Facebook
           </button>
 
           <button
             onClick={handleGoogleSignIn}
-            className="flex gap-3 font-semibold border border-green-800 items-center justify-center   text-green-800 rounded-full  py-1 hover:scale-105  transition-transform duration-700"
+            className="flex gap-3 font-semibold border border-green-500 items-center justify-center   text-slate-800 rounded-full  py-1 hover:scale-105  transition-transform duration-500"
           >
             <img src={g} className="h-6 w-6" alt="Google" />
             Login with Google
           </button>
         </div>
-        <div className=" absolute top-12 left-12 flex justify-center hover:scale-105 transition-all duration-500">
-          {/* <button className="font-medium flex items-center gap-0 z-40   text-2xl text-white bg-[#477553] px-2 py-1  rounded-xl">
-            <IoMdCheckmarkCircleOutline size={36} />
-            CheckMateGo
-          </button> */}
-          <img src={logo} alt="Logo" />
+        <div className=" absolute top-4 md:top-12 left-1/2 -translate-x-1/2 md:-translate-x-0 md:left-12 flex justify-center hover:scale-105 transition-all duration-500">
+      
+          <Link to={'/'}>
+          <img src={logo} className="w-[250px]" alt="Logo" /></Link>
         </div>
       </div>
       <div

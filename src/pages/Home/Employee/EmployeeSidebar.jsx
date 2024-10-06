@@ -7,15 +7,13 @@ import { MdOutlineTask } from "react-icons/md";
 
 const EmployeeSidebar = () => {
   return (
-    <>
+    <div className="px-4 mt-24">
       <NavLink
         end
         to="/dashboard"
         className={({ isActive }) =>
-          `flex items-center px-4 py-2 mt-4 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
-            isActive
-              ? "bg-[#477553]  text-white "
-              : "text-[#649474] bg-white"
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
+            isActive ? "bg-green-500   " : "bg-[#3F4454] "
           }`
         }
       >
@@ -26,10 +24,8 @@ const EmployeeSidebar = () => {
       <NavLink
         to="/dashboard/task"
         className={({ isActive }) =>
-          `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
-            isActive
-              ? "bg-[#477553]  text-white "
-              : "text-[#649474] bg-white"
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
+            isActive ? "bg-green-500   " : "bg-[#3F4454] "
           }`
         }
       >
@@ -40,10 +36,8 @@ const EmployeeSidebar = () => {
       <NavLink
         to="/dashboard/calender"
         className={({ isActive }) =>
-          `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
-            isActive
-              ? "bg-[#477553]  text-white "
-              : "text-[#649474] bg-white"
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
+            isActive ? "bg-green-500   " : "bg-[#3F4454] "
           }`
         }
       >
@@ -54,10 +48,8 @@ const EmployeeSidebar = () => {
       <NavLink
         to="/dashboard/uploaded"
         className={({ isActive }) =>
-          `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
-            isActive
-              ? "bg-[#477553]  text-white "
-              : "text-[#649474] bg-white"
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
+            isActive ? "bg-green-500   " : "bg-[#3F4454] "
           }`
         }
       >
@@ -68,10 +60,8 @@ const EmployeeSidebar = () => {
       <NavLink
         to="/dashboard/profile"
         className={({ isActive }) =>
-          `flex items-center px-4 py-2 mb-3 border rounded-md border-[#477553]  transition-colors duration-300 transform  hover:text-white    hover:bg-[#477553] ${
-            isActive
-              ? "bg-[#477553]  text-white "
-              : "text-[#649474] bg-white"
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
+            isActive ? "bg-green-500   " : "bg-[#3F4454] "
           }`
         }
       >
@@ -79,7 +69,7 @@ const EmployeeSidebar = () => {
 
         <span className="mx-4 font-medium">Profile</span>
       </NavLink>
-    </>
+    </div>
   );
 };
 

@@ -49,10 +49,10 @@ const UserRow = ({ user, users, refetch }) => {
           {user?.subscription?.status}
         </span>
       </td>
-      <td className="px-2 whitespace-nowrap py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
+      <td className="px-2  whitespace-nowrap py-2 border-r flex gap-2 justify-center items-center bg-[#f9f9f9] space-x-0">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-blue-500 flex items-center text-white py-1 px-3 rounded-lg hover:bg-blue-600"
+          className="bg-[#6C6EFE] flex items-center text-white py-1 px-3 rounded-lg hover:bg-blue-600"
         >
           <IoEyeOutline />
           View

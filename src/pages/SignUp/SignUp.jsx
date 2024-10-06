@@ -8,8 +8,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import GetPhoto from "../../utils/GetPhoto";
 import { sendEmailVerification } from "firebase/auth";
-import logo from "../../assets/logos.png";
+import logo from "../../assets/logoss.svg";
 import bg from "../../assets/bg.png";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOffSharp } from "react-icons/io5";
 const SignUp = () => {
   const {
     createUser,
@@ -19,8 +21,9 @@ const SignUp = () => {
     signInWithFacebook,
     updateUserProfile,
     saveUser,
-    logOut,
+   
   } = useAuth();
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleGoogleSignIn = async () => {
@@ -84,9 +87,8 @@ const SignUp = () => {
         companyName: cname,
         companySize: csize,
       });
-      sendEmailVerification(result.user);
-      logOut();
-      navigate("/login");
+
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -102,10 +104,10 @@ const SignUp = () => {
         className="min-h-screen w-full -z-10  opacity-5 absolute bg-no-repeat bg-cover bg-center  "
       ></div>
       <div className=" p-8 mt-8 z-30  ">
-        <h2 className="text-4xl font-bold text-center mb-1 text-green-800">
+        <h2 className="text-2xl mt-12 md:mt-0 md:text-3xl lg:text-4xl font-bold text-center mb-1 text-slate-800">
           Welcome to CheckMateGo
         </h2>
-        <p className="text-green-700 text-center mb-4">
+        <p className="text-slate-800 text-center mb-4">
           Join now and start your journey with us{" "}
         </p>
         <form onSubmit={handleSignUp} className="max-w-md  mx-auto">
@@ -115,7 +117,7 @@ const SignUp = () => {
               type="text"
               name="fullName"
               placeholder="Full Name"
-              className="w-full z-30  px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
 
@@ -125,7 +127,7 @@ const SignUp = () => {
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
           <div className="mb-4">
@@ -133,7 +135,7 @@ const SignUp = () => {
               type="file"
               name="photo"
               placeholder="Photo"
-              className="w-full px-5 py-1 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full px-5 py-1 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
 
@@ -143,7 +145,7 @@ const SignUp = () => {
               type="password"
               name="password"
               placeholder="Password"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
           <div className="mb-4">
@@ -151,7 +153,7 @@ const SignUp = () => {
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+              className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
 
@@ -160,7 +162,7 @@ const SignUp = () => {
               type="text"
               name="cname"
               placeholder="Company Name"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+               className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
           <div className="">
@@ -168,7 +170,7 @@ const SignUp = () => {
               type="text"
               name="csize"
               placeholder="Company Size"
-              className="w-full px-5 py-2 border rounded-full border-slate-200 focus:outline-green-800 bg-slate-50 text-gray-900"
+             className="w-full z-30  px-5 py-2 border rounded-full border-green-500 focus:outline-green-600 bg-transparent text-gray-900"
             />
           </div>
 
@@ -177,19 +179,19 @@ const SignUp = () => {
               id="terms"
               type="checkbox"
               name="terms"
-              className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+              className="h-4 w-4  text-green-600 border-gray-300 rounded focus:ring-green-500"
             />
             <label className="ml-2 text-sm text-gray-500">
-              I agree{" "}
-              <span className="text-green-700 font-semibold">
-                terms and conditions
+              I agree {" "}
+              <span className="text-slate-800 text-sm font-semibold">
+                 terms and conditions
               </span>
             </label>
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full text-white font-bold py-2 px-4 rounded-full bg-gradient-to-r from-[#4f7c5b] to-[#2e4f37] hover:from-green-800 hover:to-green-900 disabled:from-green-900 disabled:to-green-950"
+            className="w-full text-white font-bold py-2 px-4 rounded-full  bg-green-500 hover:bg-green-600 disabled:bg-green-700"
           >
             {loading ? (
               <ImSpinner9 className="animate-spin m-auto" size={22} />
@@ -199,11 +201,11 @@ const SignUp = () => {
           </button>
         </form>
         <div className="max-w-md mt-4 mx-auto">
-          <p className="text-center text-sm">
+          <p className="text-center text-[#A3A3A3] text-sm">
             Already have an account?{" "}
             <Link
               to={"/login"}
-              className="text-green-800 font-bold hover:underline"
+              className="text-slate-800 text-base font-bold hover:underline"
             >
               Log in
             </Link>
@@ -217,7 +219,7 @@ const SignUp = () => {
         <div className="flex max-w-md mx-auto flex-col gap-3 mt-4">
           <button
             // onClick={handleFacebookSignIn}
-            className="flex z-30 gap-2 font-semibold border border-green-800 items-center justify-center   text-green-800 rounded-full  py-1 hover:scale-105 transition-transform duration-700 "
+            className="flex z-30 gap-2 font-semibold border border-slate-800 items-center justify-center   text-slate-800 rounded-full  py-1 hover:scale-105 transition-transform duration-300 "
           >
             <img src={fb} className="h-7 w-7" alt="Facebook" />
             Login with Facebook
@@ -225,14 +227,16 @@ const SignUp = () => {
 
           <button
             onClick={handleGoogleSignIn}
-            className="flex z-30 gap-3 font-semibold border border-green-800 items-center justify-center   text-green-800 transition-transform duration-700 rounded-full  py-1 hover:scale-105 "
+             className="flex z-30 gap-2 font-semibold border border-slate-800 items-center justify-center   text-slate-800 rounded-full  py-1 hover:scale-105 transition-transform duration-300 "
           >
             <img src={g} className="h-6 w-6" alt="Google" />
             Login with Google
           </button>
         </div>
-        <div>
-          <img className="hover:scale-95 transition-transform duration-500 absolute top-4 left-12" src={logo} alt="Logo" />
+        <div className=" absolute top-4 md:top-12 left-1/2 -translate-x-1/2 md:-translate-x-0 md:left-12 flex justify-center hover:scale-105 transition-all duration-500">
+          <Link to={"/"}>
+            <img src={logo} className="w-[250px]" alt="Logo" />
+          </Link>
         </div>
       </div>
     </div>

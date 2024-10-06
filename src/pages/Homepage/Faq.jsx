@@ -1,7 +1,7 @@
-import bg from "../../assets/faq/faq.svg";
+import bg from "../../assets/faq.svg";
 import rope1 from "../../assets/faq/Group 18.svg";
 import rope2 from "../../assets/faq/Group 19.svg";
-
+import logo2 from "/feature5.svg";
 const faqData = [
   {
     question:
@@ -41,15 +41,14 @@ const Faq = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${bg})`,
+        backgroundImage: `url(${logo2})`,
       }}
-      className=" relative bg-no-repeat  object-cover mt-24 px-5 md:px-12 lg:px-60 py-8 lg:py-32"
+      className=" relative   lg:h-[1000px] bg-no-repeat  object-cover mt-24 px-5 md:px-12 lg:px-60 py-8 lg:py-32"
     >
       <h2 className="text-3xl font-bold text-center mb-4 lg:mb-8 mt-6 text-white">
         Frequently Asked Questions
       </h2>
       <div className=" space-y-4 md:space-y-6">
-     
         {faqData?.map((faq, ind) => (
           <div key={ind} className="collapse collapse-plus bg-white">
             <input type="radio" name="my-accordion-3" defaultChecked />
@@ -62,9 +61,18 @@ const Faq = () => {
           </div>
         ))}
       </div>
-      <img className="absolute top-4 hidden lg:inline-block right-0 " src={rope1} alt="" />
-      <img className="absolute hidden lg:inline-block bottom-4 left-0 " src={rope2} alt="" />
+      <img
+        className="absolute top-4 hidden lg:inline-block right-0 "
+        src={rope1}
+        alt=""
+      />
+      <img
+        className="absolute  hidden lg:inline-block bottom-12 left-0 "
+        src={rope2}
+        alt=""
+      />
     </div>
+  
   );
 };
 

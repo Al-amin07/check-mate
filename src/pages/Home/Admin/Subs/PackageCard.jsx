@@ -65,20 +65,20 @@ const PackageCard = ({ item, index, refetch }) => {
   return (
     <div className="">
       <div className="flex justify-between items-center  mb-4">
-        <button className="bgc text-white py-[6px] px-5 rounded-lg">
+        <button className="bg-slate-800 text-white py-[6px] px-5 rounded-lg">
           Package {index + 1}
         </button>
         <div className="flex gap-4 items-center">
           <button
             onClick={() => setIsDeleteOpen(true)}
-            className="text-green-600 bg-slate-200/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
+            className="text-slate-800 bg-slate-100/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
           >
             <RiDeleteBinLine size={18} /> Delete
           </button>
 
           <button
             onClick={() => setIsOpen(true)}
-            className="text-green-600 bg-slate-200/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
+            className="text-slate-800 bg-slate-100/80 hover:bg-slate-300 py-1 px-2 rounded-md flex items-center gap-2 hover:text-green-800"
           >
             <FaPencil size={18} /> Edit
           </button>

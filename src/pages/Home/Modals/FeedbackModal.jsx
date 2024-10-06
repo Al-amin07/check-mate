@@ -38,7 +38,7 @@ const FeedbackModal = ({ setIsOpen, isOpen, user, handleFeedback }) => {
               <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div className="mt-8">
                   <div className="flex items-center gap-3">
-                    <h2 className="col text-lg font-medium ">
+                    <h2 className="text-green-500 text-lg font-medium ">
                       Share Feedback{" "}
                     </h2>
                     <hr className="border flex-1" />
@@ -94,7 +94,7 @@ const FeedbackModal = ({ setIsOpen, isOpen, user, handleFeedback }) => {
                   <div className="flex justify-end ">
                     <button
                       type="submit"
-                      className="bgc mt-5 text-white px-6 py-2 rounded-full hover:bg-green-700 focus:outline-none"
+                      className="bg-green-500 mt-5 text-white px-6 py-2 rounded-full hover:bg-green-600 focus:outline-none"
                     >
                       Share
                     </button>

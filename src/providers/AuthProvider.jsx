@@ -57,7 +57,9 @@ const AuthProvider = ({ children }) => {
       withCredentials: true,
     });
     localStorage.setItem("token", "");
-    setUser(null);
+    setUser({});
+    setUserDetails({});
+    setRole(null);
     return signOut(auth);
   };
   // console.log(userDetails);
@@ -102,6 +104,7 @@ const AuthProvider = ({ children }) => {
       subscription: {
         type: "No Plan",
         status: "unpaid",
+        trailLimit: 0,
         startedDate: null,
         endDate: null,
         trailEndDate: null,

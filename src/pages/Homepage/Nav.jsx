@@ -43,8 +43,8 @@ const Nav = () => {
               <NavLink className={"btn btn-ghost mr-2"} to={"/login"}>
                 LOG IN
               </NavLink>
-              <button className="btn bg-black text-white px-6 hover:bg-slate-800">
-                Free Trails
+              <button className="btn uppercase bg-black text-white px-6 hover:bg-slate-800">
+                Free Trail
               </button>
             </>
           )}
@@ -79,7 +79,7 @@ const Nav = () => {
                 LOG IN
               </NavLink>
               <button className="btn  bg-slate-200 w-full  text-black px-6 ">
-                Free Trails
+                Free Trail
               </button>
             </>
           )}

@@ -3,8 +3,17 @@ import dashboardImage from '../../assets/das2.png'; // Replace with the actual p
 import fog from '../../assets/fog3.svg'
 import feature from '../../assets/feature2.svg'
 import { MdOutlineArrowOutward } from "react-icons/md";
+import toast from 'react-hot-toast';
 
-const ProductivitySection = () => {
+const ProductivitySection = ({setIsOpen, user}) => {
+  const handleTrail = () => {
+    if (!user?.email) {
+      toast.error("Please Login first!!!");
+      return;
+    } else {
+      setIsOpen(true);
+    }
+  };
   return (
     <div className=" relative py-20 flex items-center justify-center">
       <div className="container relative z-20 mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -17,7 +26,7 @@ const ProductivitySection = () => {
           <p className="text-gray-600 my-3 md:my-4 lg:my-7">
             Start your free 7-day trial today.
           </p>
-          <button className="bg-green-500 text-white  py-3 px-6 flex items-center gap-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300">
+          <button onClick={handleTrail} className="bg-green-500 text-white  py-3 px-6 flex items-center gap-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300">
             GET STARTED FOR FREE <MdOutlineArrowOutward size={24}/>
           </button>
         </div>

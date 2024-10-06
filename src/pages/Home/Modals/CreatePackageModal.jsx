@@ -97,7 +97,7 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index, setDe
                     <button
                     disabled={loading}
                       type="submit"
-                      className="bgc mt-5 text-white px-6 py-2 rounded-full hover:bg-green-700 disabled:bg-green-500 focus:outline-none"
+                      className="bg-green-500 mt-5 text-white px-6 py-2 rounded-full hover:bg-green-600 disabled:bg-green-700 focus:outline-none"
                     >
                       {loading ? <ImSpinner9 size={24} className="animate-spin m-auto"/> : 'Save'}
                     </button>
@@ -109,7 +109,7 @@ const CreatePackageModal = ({ closeModal, isOpen, handleData, item, index, setDe
                   className="absolute hover:scale-110  top-6 right-4 col"
                   size={28}
                 />
-                <button className="bg-[#4D7A58] py-[6px] px-8 rounded-lg text-white absolute top-6 left-4">Package {index + 1}</button>
+                <button className="bg-green-500 0 py-[6px] px-8 rounded-lg text-white absolute top-6 left-4">Package {index + 1}</button>
               </DialogPanel>
             </TransitionChild>
           </div>

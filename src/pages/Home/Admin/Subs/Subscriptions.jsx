@@ -10,7 +10,6 @@ import { LuPlus } from "react-icons/lu";
 import PackageMOdal from "../../Modals/PackageModal";
 import AllSubs from "./AllSubs";
 
-
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
@@ -20,7 +19,11 @@ const Subscriptions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-  const { data: subscriptions = {}, refetch } = useQuery({
+  const {
+    data: subscriptions = {},
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["subscription"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/subscription-data");
@@ -122,23 +125,38 @@ const Subscriptions = () => {
       0
     );
   console.log(totlaGetAmount);
+  const [itemPerPage, setItemPerPage] = useState(3);
+  const totalItem = subscriptions?.totalSubscribers?.length;
+  const [start, setStart] = useState(1);
+  const totalPage = Math.ceil(totalItem / itemPerPage);
+
+  const startData = (start - 1) * itemPerPage;
+  const endData = start * itemPerPage;
+  const newData = subscriptions?.totalSubscribers?.slice(startData, endData);
+
+  if (isLoading)
+    return (
+      <div className="min-h-[300px] flex items-center justify-center">
+        <p>Loading ....</p>
+      </div>
+    );
   return (
     <div className="max-w-6xl bg-white mx-auto p-6">
-      {/* Package Summary Cards */}
       <div className="flex gap-2 justify-end items-center mb-6">
         <button
           onClick={() => setIsChange(!isChange)}
-          className="text-[#4D7A58] border-[#4D7A58]  text-lg border bg-[#f9f9f9] py-[6px] px-4 rounded-full hover:bg-slate-100 hover:text-green-800"
+          className="text-green-500 border-green-500  text-lg border bg-[#f9f9f9] py-[6px] px-4 rounded-full hover:text-green-600"
         >
           {!isChange ? "All Packages" : "Overview"}
         </button>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-[#4D7A58] flex gap-1 items-center text-lg  text-white py-[6px] px-4 rounded-full hover:bg-green-800"
+          className="bg-slate-800 flex gap-1 items-center text-lg  text-white py-[6px] px-4 rounded-full hover:bg-slate-700"
         >
           <LuPlus size={24} /> Create New Package
         </button>
         <PackageMOdal
+          length={subscriptions?.totalPackages?.length}
           handleData={handleData}
           isOpen={isOpen}
           closeModal={closeModal}
@@ -182,20 +200,20 @@ const Subscriptions = () => {
           {/* Subscribers Table */}
           <div className="bg-white lg:p-6 rounded-lg ">
             <div className="flex justify-between items-center">
-              <h3 className="text-md font-semibold bg-base-200 hover:bg-green-100 text-green-700 py-2 px-4 rounded-lg mb-2 inline-block">
+              <h3 className="text-md font-semibold  hover:bg-slate-100 cursor-pointer text-slate-800 py-2 px-4 rounded-lg mb-2 inline-block">
                 Total Subscribers
               </h3>
 
               {/* Search and Date Picker */}
               <div className="flex items-center justify-end gap-4 mb-4">
                 <div>
-                  <button className="flex bgc text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
+                  <button className="flex bg-green-500 text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
                     <IoSearchSharp size={22} />
                     Search
                   </button>
                 </div>
                 <div>
-                  <select className="py-2 px-4 border col font-medium border-gray-300 rounded-lg">
+                  <select className="py-2 px-4 border text-green-500 font-medium border-green-500 rounded-lg">
                     <option>August 2024</option>
                     <option>September 2024</option>
                     <option>October 2024</option>
@@ -207,7 +225,7 @@ const Subscriptions = () => {
             <div className="bg-white shadow-lg rounded-lg overflow-x-auto">
               <table className="min-w-full table-auto rounded-lg">
                 <thead className=" text-white">
-                  <tr className="bg-[#5A8C67]">
+                  <tr className="bg-green-500">
                     <th className="whitespace-nowrap px-1 border-r py-2">Sl</th>
                     <th className="whitespace-nowrap px-1 border-r py-2">
                       Name
@@ -224,24 +242,24 @@ const Subscriptions = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {subscriptions?.totalSubscribers?.map((user, index) => (
+                  {newData?.map((user, index) => (
                     <tr key={user.id} className="text-center border-t">
-                      <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
+                      <td className="px-2 whitespace-nowrap  border-r text-slate-800 bg-[#f9f9f9] py-2">
                         {index + 1}
                       </td>
-                      <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
+                      <td className="px-2 whitespace-nowrap  border-r text-slate-800 bg-[#f9f9f9] py-2">
                         {user.name}
                       </td>
-                      <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
+                      <td className="px-2 whitespace-nowrap  border-r text-slate-800 bg-[#f9f9f9] py-2">
                         {user.email}
                       </td>
-                      <td className="px-2 whitespace-nowrap  border-r col bg-[#f9f9f9] py-2">
+                      <td className="px-2 whitespace-nowrap  border-r text-slate-800 bg-[#f9f9f9] py-2">
                         {user?.companyDetails?.companyName} <br />{" "}
                         <span className="text-slate-500 text-sm mt-0">
                           {user?.companyDetails?.employees} employees
                         </span>
                       </td>
-                      <td className="  border-r col bg-[#f9f9f9] py-2">
+                      <td className="  border-r text-slate-800 bg-[#f9f9f9] py-2">
                         {user?.subscriptionDetails?.plan} <br />{" "}
                         <span className="text-slate-500 text-sm mt-0">
                           ${user?.subscriptionDetails?.price}
@@ -251,15 +269,21 @@ const Subscriptions = () => {
                   ))}
                 </tbody>
               </table>
-              <div className="bg-[#5A8C67] py-[2px] w-full flex justify-end gap-8 pr-8">
+              <div className="bg-green-500 py-[2px] w-full flex justify-end gap-8 pr-8">
                 <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
-                  <h3>Page per page</h3>
-                  <select className=" ml-1 bgc text-white">
+                  <h3>Item per Page</h3>
+                  <select
+                    onChange={(e) => {
+                      setStart(1);
+                      setItemPerPage(e.target.value);
+                    }}
+                    className=" ml-1 bg-green-500 text-white"
+                  >
+                    <option className="bg-white text-black" value="3">
+                      3
+                    </option>
                     <option className="bg-white text-black" value="5">
                       5
-                    </option>
-                    <option className="bg-white text-black" value="7">
-                      7
                     </option>
                     <option className="bg-white text-black" value="10">
                       10
@@ -267,14 +291,22 @@ const Subscriptions = () => {
                   </select>
                 </div>
                 <div className="flex gap-1 items-center">
-                  <div className=" flex items-center  font-normal text-right text-white">
+                  <button
+                    disabled={start === 1}
+                    onClick={() => setStart(start - 1)}
+                    className=" flex items-center cursor-pointer  font-normal text-right text-white"
+                  >
                     <TbPlayerTrackPrevFilled className="" />
                     <GrCaretPrevious className="" />
-                  </div>
-                  <div className=" flex items-center  font-normal text-right text-white">
+                  </button>
+                  <button
+                    disabled={start === totalPage}
+                    onClick={() => setStart(start + 1)}
+                    className=" flex items-center  font-normal text-right text-white"
+                  >
                     <GrCaretNext className="inline-block" />
                     <TbPlayerTrackNextFilled className="inline-block" />
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

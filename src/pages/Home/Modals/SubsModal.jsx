@@ -10,7 +10,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const TrailModal = ({ closeModal, isOpen, handleData }) => {
+const SubsModal = ({ closeModal, isOpen, str }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={closeModal}>
@@ -37,32 +37,24 @@ const TrailModal = ({ closeModal, isOpen, handleData }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel className="w-full max-w-md md:max-w-xl transform overflow-hidden rounded-xl bg-white px-10 py-16 text-center  align-middle shadow-xl transition-all">
-                <h2 className="text-[#24402B] font-bold mb-3 text-3xl md:text-4xl">
-                  Start 7 days Free Trail
-                </h2>
-
-                <p className=" text-[#24402B] text-base md:text-xl font-semibold">
-                  Try first and decide later, no credit card required
-                </p>
-
-                <div className="flex justify-center ">
-                  <button
-                    onClick={handleData}
-                    type="submit"
-                    className="bg-gradient-to-r from-[#4F7D5B] to-green-900 flex items-center gap-1 mt-5 text-white px-6 py-1 rounded-full hover:from-green-800 hover:to-green-950 focus:outline-none text-xl"
+              <DialogPanel className="w-full max-w-lg transform overflow-hidden rounded-xl bg-white px-10 py-16 text-center  align-middle shadow-xl transition-all">
+                <div className=" p-3 rounded-lg ">
+                  <h2 className="text-2xl font-bold">
+                   Your 7 days free trail ends
+                  </h2>
+                  <p className="mt-2 mb-4 text-sm">
+                    Thank you for trying out Home Program free trail. We hope
+                    you enjoyed the experience! To continue using all features,
+                    please upgrade to a paid plan.
+                  </p>
+               
+                  <Link
+                    to={"/price"}
+                    className="mt-4 px-4 py-2 w-full text-white bg-green-500 rounded justify-center flex items-center gap-1 hover:bg-green-600"
                   >
-                    Start Trail <FaArrowRightLong size={28} />
-                  </button>
-                  {/* <Link
-                    to={'/subscription'}
-                      type="submit"
-                      className="bg-gradient-to-r from-[#4F7D5B] to-green-900 flex items-center gap-1 mt-5 text-white px-6 py-1 rounded-full hover:from-green-800 hover:to-green-950 focus:outline-none text-xl"
-                    >
-                      Start Trail <FaArrowRightLong size={28} />
-                    </Link> */}
+                    Upgrade Now <FaArrowRightLong size={24} />
+                  </Link>
                 </div>
-
                 <LiaTimesSolid
                   onClick={closeModal}
                   className="absolute hover:scale-110  top-4 right-4 col"
@@ -77,10 +69,10 @@ const TrailModal = ({ closeModal, isOpen, handleData }) => {
   );
 };
 
-TrailModal.propTypes = {
+SubsModal.propTypes = {
   closeModal: PropTypes.func,
   handleData: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default TrailModal;
+export default SubsModal;

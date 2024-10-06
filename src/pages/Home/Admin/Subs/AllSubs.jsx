@@ -8,6 +8,7 @@ const AllSubs = ({ packages, refetch }) => {
       <div className="px-8 space-y-16">
         {packages?.map((item, index) => (
           <PackageCard
+         
             refetch={refetch}
             index={index}
             key={item?._id}

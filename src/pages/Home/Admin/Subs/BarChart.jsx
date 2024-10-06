@@ -89,8 +89,8 @@ import {
           <Tooltip />
           <Legend />
           <Bar dataKey="Getting Started" fill="#A4BFAB" />
-          <Bar dataKey="Scaling Up" fill="#41724D" />
-          <Bar dataKey="Home Program" fill="#24402B" />
+          <Bar dataKey="Scaling Up" fill="#22C55E" />
+          <Bar dataKey="Home Program" fill="#18243E" />
         </BarChart>
       </ResponsiveContainer>
     );

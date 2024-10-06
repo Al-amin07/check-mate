@@ -7,7 +7,7 @@ import { FaFlag } from "react-icons/fa";
 
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdNotificationsActive } from "react-icons/md";
 import { TiMessages } from "react-icons/ti";
 
@@ -15,11 +15,18 @@ const Navbar = () => {
   const {
     user,
     logOut,
+    role,
     userDetails: { totalNotification },
-  } = useAuth();
-  console.log(user);
+  } = useAuth() || {};
+  console.log(role);
+
   const axiosSecure = useAxiosSecure();
-  const [notification, setNotification] = useState(totalNotification);
+  const [notification, setNotification] = useState([]);
+  useEffect(() => {
+    if (totalNotification) {
+      setNotification(totalNotification);
+    }
+  }, [totalNotification]);
 
   // useEffect(() => {
   //   setNotification(
@@ -54,7 +61,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-[#E4F5EC] z-50 py-4">
-      <div className="flex max-w-7xl mx-auto  justify-between items-center ">
+      <div className="flex max-w-7xl relative mx-auto  justify-between items-center ">
         <div className=" hover:scale-105 transition-all duration-300">
           <Link
             to={"/"}
@@ -63,28 +70,32 @@ const Navbar = () => {
             CheckMateGo
           </Link>
         </div>
-        <div className="hidden lg:block">
-          <h2 className="ml-28 text-2xl font-bold">Welcome Back ,  {user?.displayName}  👋</h2>
+        <div className="hidden absolute  top-1/2 -translate-y-1/2 left-32 lg:block">
+          <h2 className={`${role ? 'ml-24' : 'pr-20'} text-left text-2xl font-bold`}>
+            Welcome Back , {user?.displayName} 👋
+          </h2>
         </div>
         <div className="flex items-center gap-5">
-          <label  className="input hidden  md:flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-6 w-6 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <input type="text" className="grow" placeholder="Search..." />
-          </label>
-          <div className="h-12 hidden md:block w-[2px] bg-slate-700">
-
-          </div>
+          {role === "admin" && (
+            <>
+              <label className="input hidden  md:flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-6 w-6 opacity-70"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <input type="text" className="grow" placeholder="Search..." />
+              </label>
+              <div className="h-12 hidden md:block w-[2px] bg-slate-700"></div>
+            </>
+          )}
           <TiMessages className="text-green-500" size={32} />
           <button className="btn btn-ghost btn-circle">
             <div className="indicator   relative">
@@ -171,10 +182,12 @@ const Navbar = () => {
                 />
               </div>
             </div>
-            <div>
-              <h2 className="font-bold ">{user?.displayName}</h2>
-              <p className="text-sm">Admin</p>
-            </div>
+            {role === "admin" && (
+              <div>
+                <h2 className="font-bold ">{user?.displayName}</h2>
+                <p className="text-sm capitalize">{role}</p>
+              </div>
+            )}
           </div>
           <MdLogout
             onClick={handleLogOut}

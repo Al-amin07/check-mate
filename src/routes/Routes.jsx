@@ -23,6 +23,7 @@ import Reset from "../pages/Reset/Reset";
 import Confirm from "../pages/Home/Confirm/Confirm";
 import ResetPassword from "../pages/Reset/ResetPassword";
 import Homepage from "../pages/Homepage/Homepage";
+import Price from "../pages/Homepage/Price";
 
 export const router = createBrowserRouter([
   {
@@ -122,11 +123,15 @@ export const router = createBrowserRouter([
   { path: "/success", element: <Success /> },
   { path: "/cancel", element: <Cancle /> },
   {
-    path: "price",
+    path: "/price",
     element: (
       <PrivateRoute>
         <Pricing />
       </PrivateRoute>
     ),
   },
+  {
+    path: '/see-price',
+    element: <Price />
+  }
 ]);
