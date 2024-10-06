@@ -105,7 +105,7 @@ const Profile = () => {
               // src={user?.photoURL} // Add the actual image source here
               src={profile?.image} // Add the actual image source here
               alt="Profile"
-              className="w-36 h-36 border-[2px] border-green-600  rounded-full"
+              className="w-40 h-40  border-[2px] border-green-600  rounded-full"
             />
             <div className="w-full space-y-3 gap-4">
               <div className="flex gap-3 items-center">

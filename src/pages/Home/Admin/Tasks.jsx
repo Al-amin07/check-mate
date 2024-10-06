@@ -7,13 +7,31 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import emailjs from "@emailjs/browser";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Title from "../Common/Title";
 const Tasks = () => {
   const {
-    userDetails: { totalTasks },
+    // userDetails: { totalTasks },
 
     user,
   } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const {
+    data = {},
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["admin-task"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/admin-route/${user?.email}`
+        // `${import.meta.env.VITE_API_URL}/admin-stat/${user?.email}`
+      );
+      console.log(data);
+      return data;
+    },
+  });
+  // const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
   const closeModal = () => {
@@ -22,7 +40,7 @@ const Tasks = () => {
 
   const handleData = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     const task_Name = e.target.task.value;
     const date = e.target.date.value;
     const time = e.target.time.value;
@@ -48,43 +66,48 @@ const Tasks = () => {
       console.log(data);
 
       if (data?.result?.insertedId) {
-        const serviceId = "service_3ieawc7";
-        const publicKey = "_1OxL25JLzWngpMGb";
-        const templateId = "template_0mr7v1i";
-        const tamplateParams = {
-          from_name: user?.displayName,
-          from_email: user?.email,
-          to_name: Employee,
-          to_email: data?.email,
+        // const serviceId = "service_3ieawc7";
+        // const publicKey = "_1OxL25JLzWngpMGb";
+        // const templateId = "template_0mr7v1i";
+        // const tamplateParams = {
+        //   from_name: user?.displayName,
+        //   from_email: user?.email,
+        //   to_name: Employee,
+        //   to_email: data?.email,
 
-          message: `You have been assigned a new task: ${task_Name}. Due date: ${
-            date + " " + time
-          }`,
-        };
+        //   message: `You have been assigned a new task: ${task_Name}. Due date: ${
+        //     date + " " + time
+        //   }`,
+        // };
         toast.success(`Task Assigned to ${Employee}`);
-        emailjs
-          .send(serviceId, templateId, tamplateParams, publicKey)
-          .then(() => console.log("Email Send!!!"))
-          .catch((error) => console.log(error?.message));
+        // emailjs
+        //   .send(serviceId, templateId, tamplateParams, publicKey)
+        //   .then(() => console.log("Email Send!!!"))
+        //   .catch((error) => console.log(error?.message));
         setIsOpen(false);
-        totalTasks.push(taskData);
+        refetch();
       } else {
         toast.error("No employee exist with this name");
       }
     } catch (error) {
       toast.error(error?.message || "HH");
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
-
+  if (isLoading)
+    return (
+      <div className="min-h-[300px] flex items-center justify-center">
+        <p>Loading....</p>
+      </div>
+    );
   return (
     <div className="p-4 lg:p-8">
       {/* Header */}
       <div className="flex justify-end items-center mb-4">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-[#4D7A58] flex items-center text-lg  text-white py-2 px-4 rounded-full hover:bg-green-800"
+          className="bg-[#18243E] flex items-center text-lg  text-white py-2 px-4 rounded-full hover:bg-slate-700"
         >
           <LuPlus size={28} /> Create New Task
         </button>
@@ -94,21 +117,22 @@ const Tasks = () => {
           closeModal={closeModal}
         />
       </div>
-      <div className="flex items-center gap-6 mb-3">
+      {/* <div className="flex items-center gap-6 mb-3">
         <h2 className="text-xl font-bold text-green-900">All Tasks</h2>
         <hr className="flex-1 border" />
-      </div>
+      </div> */}
+      <Title title={'All Tasks'}/>
 
       {/* Search and Date Picker */}
       <div className="flex items-center justify-end gap-4 mb-4">
         <div>
-          <button className="flex bgc text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
+          <button className="flex bg-slate-800 text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
             <IoSearchSharp size={26} />
             Search
           </button>
         </div>
         <div>
-          <select className="py-2 px-4 border col font-medium border-gray-300 rounded-lg">
+          <select className="py-2 px-4 border text-green-500 font-medium border-green-500 rounded-lg">
             <option>August 2024</option>
             <option>September 2024</option>
             <option>October 2024</option>
@@ -117,7 +141,7 @@ const Tasks = () => {
       </div>
 
       {/* Task Table */}
-      <TaskTable data={totalTasks} />
+      <TaskTable data={data?.totalTasks} />
     </div>
   );
 };

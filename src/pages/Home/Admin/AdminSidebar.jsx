@@ -10,13 +10,12 @@ const AdminSidebar = () => {
   const { user } = useAuth();
   return (
     <div className="px-4 mt-24">
-    
       <NavLink
         end
         to="/dashboard"
         className={({ isActive }) =>
-          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
-            isActive ? "bg-green-500   " : "bg-[#3F4454] "
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-[#3F4454] ${
+            isActive ? "bg-[#3F4454]   " : " bg-black"
           }`
         }
       >
@@ -27,8 +26,8 @@ const AdminSidebar = () => {
       <NavLink
         to="/dashboard/tasks"
         className={({ isActive }) =>
-          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
-            isActive ? "bg-green-500   " : "bg-[#3F4454] "
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-[#3F4454] ${
+            isActive ? "bg-[#3F4454]   " : " bg-black"
           }`
         }
       >
@@ -39,8 +38,8 @@ const AdminSidebar = () => {
       <NavLink
         to="/dashboard/users"
         className={({ isActive }) =>
-          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
-            isActive ? "bg-green-500   " : "bg-[#3F4454] "
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-[#3F4454] ${
+            isActive ? "bg-[#3F4454]   " : " bg-black"
           }`
         }
       >
@@ -51,8 +50,8 @@ const AdminSidebar = () => {
       <NavLink
         to="/dashboard/feedbacks"
         className={({ isActive }) =>
-          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
-            isActive ? "bg-green-500   " : "bg-[#3F4454] "
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-[#3F4454] ${
+            isActive ? "bg-[#3F4454]   " : " bg-black"
           }`
         }
       >
@@ -63,8 +62,8 @@ const AdminSidebar = () => {
       <NavLink
         to="/dashboard/subscriptions"
         className={({ isActive }) =>
-          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-green-500 ${
-            isActive ? "bg-green-500   " : "bg-[#3F4454] "
+          `flex items-center px-4 text-white py-2 mb-3  rounded-md   transition-colors duration-300 transform  hover:text-white    hover:bg-[#3F4454] ${
+            isActive ? "bg-[#3F4454]   " : " bg-black"
           }`
         }
       >

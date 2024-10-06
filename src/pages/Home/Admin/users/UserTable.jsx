@@ -4,10 +4,9 @@ import {
   TbPlayerTrackNextFilled,
   TbPlayerTrackPrevFilled,
 } from "react-icons/tb";
-import { IoEyeOutline } from "react-icons/io5";
-import { MdDelete } from "react-icons/md";
+
 import { useState } from "react";
-import DetailsModal from "../../Modals/DetailsModal";
+
 import UserRow from "./UserRow";
 
 const UserTable = ({ title, users, refetch }) => {
@@ -23,20 +22,20 @@ const UserTable = ({ title, users, refetch }) => {
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="md:text-lg text-sm whitespace-nowrap font-semibold bg-base-200 hover:bg-green-100 text-green-700 py-2 px-4 rounded-lg mb-2 inline-block">
+        <h3 className="md:text-base text-sm whitespace-nowrap font-semibold  hover:bg-slate-100 text-slate-800 py-2 px-4 rounded-lg mb-2 inline-block">
           {title}
         </h3>
 
         {/* Search and Date Picker */}
         <div className="flex items-center justify-end gap-4 ">
           <div>
-            <button className="flex bgc text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
+            <button className="flex bg-slate-800 text-white py-1 px-5 rounded-full items-center gap-1 text-lg">
               <IoSearchSharp size={22} />
               Search
             </button>
           </div>
           <div>
-            <select className="py-2 px-4 border col font-medium border-gray-300 rounded-lg">
+            <select className="py-2 px-4 border text-slate-800 font-medium border-slate-800 rounded-lg">
               <option>August 2024</option>
               <option>September 2024</option>
               <option>October 2024</option>
@@ -49,7 +48,7 @@ const UserTable = ({ title, users, refetch }) => {
       <div className="bg-white shadow-lg rounded-lg overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead className=" text-white">
-            <tr className="bg-[#5A8C67]">
+            <tr className="bg-green-500">
               <th className=" border-r text-sm whitespace-nowrap md:text-base py-2">
                 Sl
               </th>
@@ -79,7 +78,7 @@ const UserTable = ({ title, users, refetch }) => {
         </table>
 
         {/* Pagination */}
-        <div className="bg-[#5A8C67] py-[2px] w-auto flex justify-end gap-8 pr-8">
+        <div className="bg-green-500 py-[2px] w-auto flex justify-end gap-8 pr-8">
           <div className="px-4 py-1 flex items-center text-right font-normal text-sm text-white">
             <h3>Page per page</h3>
             <select
@@ -87,7 +86,7 @@ const UserTable = ({ title, users, refetch }) => {
                 setItemPerPage(e.target.value);
                 setStart(1);
               }}
-              className=" ml-1 bgc text-white"
+              className=" ml-1 bg-green-500 text-white"
             >
               <option className="bg-white text-black" value="5">
                 5

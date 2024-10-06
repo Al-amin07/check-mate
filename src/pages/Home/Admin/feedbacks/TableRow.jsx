@@ -72,14 +72,14 @@ const TableRow = ({ user, feedbacks, refetch }) => {
             : user?.Location}
         </a>
       </td>
-      <td className="border whitespace-nowrap border-gray-300 px-4 py-2">
+      <td className="border bg-[#f9f9f9] whitespace-nowrap border-gray-300 px-1 py-2">
         <img
           src={user?.photo}
           alt={user?.task_name}
-          className="h-16 w-16 mx-auto object-cover rounded"
+          className="h-20 w-20 mx-auto object-cover rounded"
         />
       </td>
-      <td className="border whitespace-nowrap border-gray-300 px-2 py-2">
+      <td className="border whitespace-nowrap bg-[#f9f9f9] border-gray-300 px-2 py-2">
         <div className="pb-1 border-b border-green-600 text-left">
           {user?.feedback ? (
             <h2>
@@ -96,10 +96,10 @@ const TableRow = ({ user, feedbacks, refetch }) => {
           )}
         </div>
       </td>
-      <td className="px-2 whitespace-nowrap py-2 border-r flex gap-2 justify-center bg-[#f9f9f9] space-x-0">
+      <td className="px-2  h-[100px] bg-[#f9f9f9]  whitespace-nowrap py-2 border-r flex gap-2 justify-center items-center  space-x-0">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-blue-500 flex items-center text-white py-1 px-3 rounded-lg hover:bg-blue-600"
+          className="bg-blue-500 flex items-center text-white py-1 px-3 rounded-full hover:bg-blue-600"
         >
           <IoEyeOutline />
           View
@@ -114,7 +114,7 @@ const TableRow = ({ user, feedbacks, refetch }) => {
 
         <button
           onClick={() => setIsDeleteOpen(true)}
-          className="bg-red-500 flex items-center text-white py-1 px-3 rounded-lg hover:bg-red-600"
+          className="bg-red-500 flex items-center text-white py-1 px-3 rounded-full hover:bg-red-600"
         >
           <MdDelete />
           Delete

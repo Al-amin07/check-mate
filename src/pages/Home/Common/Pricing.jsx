@@ -11,7 +11,7 @@ const Pricing = () => {
   const {
     user,
     userDetails: {
-      user: { subscription },
+      user: { subscription = {} },
     },
   } = useAuth();
   const { data: packages = [] } = useQuery({
@@ -32,6 +32,10 @@ const Pricing = () => {
   console.log(subscription);
 
   const handleTrail = async () => {
+    if(!user){
+      toast.error('Please Login First!!!')
+      return ;
+    }
     try {
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/trail/${user?.email}`
@@ -74,7 +78,7 @@ const Pricing = () => {
       {/* Pricing Cards */}
       <div className="max-w-5xl  mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Getting Started */}
-        {packages.map((item) => (
+        {packages?.map((item) => (
           <div
             key={item._id}
             className="bg-white transition-transform duration-500 text-center hover:bg-[#f9f9f9] hover:shadow-xl py-8  rounded-3xl shadow-lg"

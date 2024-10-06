@@ -8,7 +8,7 @@ import {
 import { Fragment } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 
-const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
+const PackageMOdal = ({ closeModal, isOpen, handleData, length }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -36,61 +36,60 @@ const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
               leaveTo="opacity-0 scale-95"
             >
               <DialogPanel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-            
                 <form onSubmit={handleData} className="space-y-3 mt-16">
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                <div className="flex gap-3 lg:col-span-2 items-center">
-                    <label className=" font-medium whitespace-nowrap">
-                      Package Name:{" "}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      name="pname"
-                     
-                      className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    <div className="flex gap-3 lg:col-span-2 items-center">
+                      <label className=" font-medium whitespace-nowrap">
+                        Package Name:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        name="pname"
+                        className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
+                      />
+                    </div>
+                    <div className="flex gap-3 items-center">
+                      <label className=" font-medium whitespace-nowrap">
+                        Price:{" "}
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        name="price"
+                        className="w-full ml-[68px] md:ml-0 border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
+                      />
+                    </div>
+                    <div className="flex gap-3 items-center">
+                      <label className=" font-medium whitespace-nowrap">
+                        Duration
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        name="duration"
+                        className="w-full border border-[#D1DED4] ml-12 md:ml-0 bg-[#f9f9f9] py-1 px-5 rounded-full "
+                      />
+                    </div>
                   </div>
-                  <div className="flex gap-3 items-center">
-                    <label className=" font-medium whitespace-nowrap">
-                      Price:{" "}
-                    </label>
-                    <input
-                      type="number"
-                      required
-                      name="price"
-                      
-                      className="w-full ml-[68px] md:ml-0 border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-full "
-                    />
-                  </div>
-                  <div className="flex gap-3 items-center">
-                    <label className=" font-medium whitespace-nowrap">
-                     Duration
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      name="duration"
-                    
-                      className="w-full border border-[#D1DED4] ml-12 md:ml-0 bg-[#f9f9f9] py-1 px-5 rounded-full "
-                    />
-                  </div>
-                </div>
                   <div className="flex gap-3">
                     <label className=" font-medium whitespace-nowrap">
-                     Package Details: 
+                      Package Details:
                     </label>
-                    <textarea required name="details" className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md "  rows={8} cols={10} ></textarea>
+                    <textarea
+                      required
+                      name="details"
+                      className="w-full border border-[#D1DED4] bg-[#f9f9f9] py-1 px-5 rounded-md "
+                      rows={8}
+                      cols={10}
+                    ></textarea>
                   </div>
-                  
-
-                 
 
                   {/* Confirm Button */}
                   <div className="flex justify-end ">
                     <button
                       type="submit"
-                      className="bgc mt-5 text-white px-6 py-2 rounded-full hover:bg-green-700 focus:outline-none"
+                      className="bg-green-500 mt-5 text-white px-6 py-2 rounded-full hover:bg-green-600 focus:outline-none"
                     >
                       Save
                     </button>
@@ -102,7 +101,9 @@ const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
                   className="absolute hover:scale-110  top-6 right-4 col"
                   size={28}
                 />
-                <button className="bg-[#4D7A58] py-[6px] px-8 rounded-lg text-white absolute top-6 left-4">Package 1</button>
+                <button className="bg-green-500 py-[6px] px-8 rounded-lg text-white absolute top-6 left-4">
+                  Package {length + 1}
+                </button>
               </DialogPanel>
             </TransitionChild>
           </div>
@@ -115,7 +116,8 @@ const PackageMOdal = ({ closeModal, isOpen, handleData }) => {
 PackageMOdal.propTypes = {
   closeModal: PropTypes.func,
   handleData: PropTypes.func,
- 
+  length: PropTypes.number,
+
   isOpen: PropTypes.bool,
 };
 

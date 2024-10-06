@@ -9,7 +9,11 @@ import { useState } from "react";
 const Task = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { data: totalTasks, refetch } = useQuery({
+  const {
+    data: totalTasks,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["task", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/employee-task/${user?.email}`);
@@ -17,10 +21,22 @@ const Task = () => {
       return data;
     },
   });
-  const [todo, setTodo] = useState(totalTasks?.filter((item) => item?.Status === "Pending"))
-  const [progress, setProgress] = useState(totalTasks?.filter((item) => item?.Status === "In progress"))
-  const [completed, setCompleted] = useState(totalTasks?.filter((item) => item?.Status === "Completed"))
-  console.log(todo, progress, completed)
+  const [todo, setTodo] = useState(
+    totalTasks?.filter((item) => item?.Status === "Pending")
+  );
+  const [progress, setProgress] = useState(
+    totalTasks?.filter((item) => item?.Status === "In progress")
+  );
+  const [completed, setCompleted] = useState(
+    totalTasks?.filter((item) => item?.Status === "Completed")
+  );
+  console.log(todo, progress, completed);
+  if (isLoading)
+    return (
+      <div className=" min-h-screen flex justify-center items-center w-full">
+        <p className=" text-slate-600 text-lg">Loading ....</p>
+      </div>
+    );
   return (
     <div className="p-8 bg-white min-h-screen">
       <div className="flex items-center gap-6">
@@ -38,7 +54,9 @@ const Task = () => {
           refetch={refetch}
           data={totalTasks?.filter((item) => item?.Status === "In progress")}
         />
-        <Complete data={totalTasks?.filter((item) => item?.Status === "Completed")}  />
+        <Complete
+          data={totalTasks?.filter((item) => item?.Status === "Completed")}
+        />
       </div>
     </div>
   );

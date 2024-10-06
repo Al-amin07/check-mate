@@ -1,6 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/feature.png";
 import logo1 from "../../assets/feature1.svg";
+
 const features = [
   {
     title: "Effortlessly export projects for client review",
@@ -40,14 +41,14 @@ const Feature = () => {
   const [tag, setTag] = useState("Project Exporting");
   return (
     <section className="relative py-12 ">
-      <div className=" z-20 mx-4 md:mx-8 lg:mx-[90px]">
+      <div className=" z-20 px-2 md:px-0 container mx-auto">
         <h2 className="text-[54px] text-center font-bold text-gray-800 mb-8">
           Features
         </h2>
 
-        <div className="flex flex-col-reverse lg:flex-row items-start  gap-8  rounded-lg">
+        <div className="flex flex-col-reverse lg:flex-row items-start  gap-6  rounded-lg">
           {/* Image Section */}
-          <div className="w-full z-30 lg:w-1/2">
+          <div className="w-full  z-30 flex-1">
             <img
               src={logo} // Replace with your image source
               alt="Dashboard Overview"
@@ -57,7 +58,7 @@ const Feature = () => {
 
           {/* Text Section */}
           <div className="w-full lg:w-1/2">
-            <div className="flex border rounded-full py-[6px] px-1 sm:px-3 gap-2 md:gap-6 mb-4">
+            <div className="flex justify-center border rounded-full sm:max-w-[550px]  lg:max-w-[600px] py-[6px] px-1 sm:px-3 gap-2 md:gap-3 xl:gap-6 mb-4">
               <span
                 onClick={() => setTag("Project Exporting")}
                 className={`${

@@ -8,7 +8,7 @@ const data = [
   
 ];
 
-const COLORS = ['#4F7859', '#1D3322', '#2B4C34'];
+const COLORS = ['#153622', '#22C55E', '#1E5034'];
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -24,7 +24,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 const PieChartPlaceholder = () => {
 
   return (
-    <ResponsiveContainer  width="100%" height="100%">
+    <ResponsiveContainer  width="100%" height="50%">
     <PieChart width={200} height={200}>
       <Pie
         data={data}

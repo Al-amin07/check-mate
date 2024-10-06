@@ -64,7 +64,7 @@ const Uploaded = () => {
           </h2>
           <Link
             className="bgc mx-auto mt-8 text-white px-6 py-2 rounded-xl font-medium"
-            to={"/task"}
+            to={"/dashboard/task"}
           >
             Go to task page
           </Link>

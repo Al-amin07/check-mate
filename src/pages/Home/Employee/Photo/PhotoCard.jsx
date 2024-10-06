@@ -7,7 +7,7 @@ const PhotoCard = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const date = new Date(item[0]);
-  // console.log(Date.now() + );
+
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",

@@ -42,22 +42,25 @@ const Calendars = () => {
 
 
   return (
-    <div className="p-8 bg-white">
+    <div className="w-full max-w-screen-xl mx-auto p-4 h-screen overflow-hidden">
+      
+    <div className="p-8 h-full ">
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        defaultView={Views.WEEK}
-        views={["week"]}
-        toolbar={false}
-        style={{ backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '8px', height: '100%' }}  
+         defaultView="week"
+        views={['day', 'week', 'month']}
+        // toolbar={false}
+        style={{ backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '8px', height: '600px' }}  
 
         min={new Date(2024, 8, 14, 10, 0)}  
         max={new Date(2024, 8, 14, 17, 0)} 
        
       
       />
+    </div>
     </div>
   );
 };

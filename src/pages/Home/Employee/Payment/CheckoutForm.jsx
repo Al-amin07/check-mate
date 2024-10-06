@@ -6,6 +6,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { ImSpinner9 } from "react-icons/im";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 const CheckoutForm = ({ packages }) => {
   const navigate = useNavigate();
   console.log(packages);
@@ -116,43 +117,70 @@ const CheckoutForm = ({ packages }) => {
   };
 
   return (
-    <div className="max-w-lg p-6 bg-white rounded-lg">
-      <h2 className="text-5xl font-bold  mb-4">Lets Make Payment</h2>
-      <p className="text-xl from-emerald-50 mb-8">
+    <div className="w-full p-6 bg-white rounded-lg">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold  mb-4">
+        Lets Make Payment
+      </h2>
+      <p className="text-lg md:text-xl from-emerald-50 mb-8">
         To start your subscription, input your card details to make payment
       </p>
-      <form onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#424770",
-                "::placeholder": {
-                  color: "#aab7c4",
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Cardholder&apos;s Name
+          </label>
+          <input
+            type="text"
+            placeholder="John"
+            className="w-full px-3 py-2 border border-green-400 rounded-md focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Card Number
+          </label>
+          <div className="w-full rounded-md flex items-center">
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#424770",
+                    border: "1px solid green",
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                  invalid: {
+                    color: "#9e2146",
+                  },
                 },
-              },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
+              }}
+              className="flex-grow"
+            />
+          </div>
+        </div>
+
         <button
-          className="bgc mt-4 py-2  font-bold px-5 rounded-full text-white"
           type="submit"
+          className="bg-green-500 mt-4 py-2 font-bold px-5 rounded-full text-white"
           disabled={!stripe || !clientSecret || processing}
         >
           {processing ? (
             <ImSpinner9 size={24} className="animate-spin m-auto" />
           ) : (
-            ` Pay $${packages?.price}`
+            `Pay $${packages?.price || "XX"}`
           )}
         </button>
       </form>
       {cardError && <p className=" text-lg text-red-500">{cardError}</p>}
     </div>
   );
+};
+
+CheckoutForm.propTypes = {
+  packages: PropTypes.object,
 };
 
 export default CheckoutForm;
